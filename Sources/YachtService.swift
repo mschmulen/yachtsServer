@@ -18,33 +18,10 @@ extension Yacht {
 
 class YachtService {
 
-  lazy var database: Database = {
-    let dbName = "yachts"
-    let connectionProperties = ConnectionProperties(host: "localhost", port: 5984, secured: false)
-    let client = CouchDBClient(connectionProperties: connectionProperties)
-    let database = client.database(dbName)
-    return database
-
-  }()
-  
-  lazy var router: Router = {
-    let router = Router()
-
-    router.post("/", middleware: BodyParser())
-    router.get("/yachts", handler: self.getAllModels)     // GetAll
-    router.get("/yacht/:id", handler: self.getModel)      // Get
-    //router.post("/yacht/:id", handler: self.updateModel)  // Update , MAS TODO
-
-    router.post("/yachtNew", handler: self.createModel)   // function Create
-    router.get("/yachtLike/:id", handler: self.incrimentLike)    // function Like with Get
-
-    return router
-  }()
-
-  func getAllModels(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
+  public let getAllModels:RouterHandler = { request,response,next in
     defer { next() }
-
-    database.retrieveAll(includeDocuments: true) { docs, error in
+    
+    SingletonDatastore.sharedInstance.database.retrieveAll(includeDocuments: true) { docs, error in
       if let error = error {
         let errorMessage = error.localizedDescription
         let status = ["status": "error", "message": errorMessage]
@@ -61,7 +38,7 @@ class YachtService {
         let status = ["status": "ok"]
         var models = [Yacht]()
 
-        for (index,doc) in docs["rows"].arrayValue.enumerated() {
+        for doc in docs["rows"].arrayValue {
           var dictionary = [String: Any]()
           dictionary["id"] = doc["id"].stringValue
           dictionary["name"] = doc["doc"]["name"].stringValue
@@ -86,8 +63,7 @@ class YachtService {
     }
   }
 
-
-  func getModel(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
+  public let getModel:RouterHandler = { request,response,next in
     defer { next() }
 
     guard let yacht = request.parameters["id"] else {
@@ -95,7 +71,7 @@ class YachtService {
       return
     }
 
-    database.retrieve(yacht) { doc, error in
+    SingletonDatastore.sharedInstance.database.retrieve(yacht) { doc, error in
 
       if let error = error {
         let errorMessage = error.localizedDescription
@@ -125,7 +101,8 @@ class YachtService {
   }
 
   // post, create new
-  func createModel(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
+  public let createModel:RouterHandler = { request,response,next in
+
     defer { next() }
 
     guard let values = request.body else {
@@ -156,7 +133,7 @@ class YachtService {
     yacht["likes"] = 0
     let json = JSON(yacht)
 
-    database.create(json) { id, revision, doc, error in
+    SingletonDatastore.sharedInstance.database.create(json) { id, revision, doc, error in
 
       if let id = id {
         let status = ["status": "ok", "id": id]
@@ -175,13 +152,16 @@ class YachtService {
     }
   }
 
-  func updateModel(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
+
+  public let updateModel:RouterHandler = { request,response,next in
     defer { next() }
 
     guard let id = request.parameters["id"] else {
       response.status(.badRequest).send("Missing model ID.")
       return
     }
+
+    Log.info("id \(id)")
 
     //
     //    guard var fields = request.getPost(fields: ["title", "strap", "content", "category", "slug"]) else {
@@ -222,15 +202,15 @@ class YachtService {
   }
 
   // like a specific yacht
-  func incrimentLike(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
+  public let incrimentLike:RouterHandler = { request,response,next in
     defer { next() }
 
     guard let id = request.parameters["id"] else {
         try response.status(.badRequest).end()
         return
     }
-
-    database.retrieve(id) { doc, error in
+    
+    SingletonDatastore.sharedInstance.database.retrieve(id) { doc, error in
       if let error = error {
         let errorMessage = error.localizedDescription
         let status = ["status": "error", "message": errorMessage]
@@ -245,9 +225,9 @@ class YachtService {
         let rev = doc["_rev"].stringValue
 
         newDocument["likes"].intValue = 3
-
-        self.database.update(id, rev: rev, document: newDocument) { rev, doc, error in
-          if let error = error {
+        
+        SingletonDatastore.sharedInstance.database.update(id, rev: rev, document: newDocument) { rev, doc, error in
+          if let _ = error {
             let status = ["status": "error"]
             let	result = ["result": status]
             let json = JSON(result)
@@ -262,10 +242,9 @@ class YachtService {
       }
     }
   }
-
+  
   func getfunction(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
-    //response.status(.OK).send(json: JSON(categoryNames))
     response.status(.OK).send("Not yet implimented")
   }
 

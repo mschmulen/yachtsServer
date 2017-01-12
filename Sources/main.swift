@@ -13,7 +13,8 @@ HeliumLogger.use(.info)
 let router = Router()
 router.post("/", middleware: BodyParser())
 
-let yachtService = YachtService()
+let api = API()
+//let yachtService = YachtService()
 //let userService = UserService()
 //let staticService = StaticService()
 
@@ -23,7 +24,8 @@ let yachtService = YachtService()
 
 //Kitura.addHTTPServer(onPort: 8090, with: router)
 
-Kitura.addHTTPServer(onPort: 8090, with: yachtService.router)
+Kitura.addHTTPServer(onPort: 8090, with: api.router)
+//Kitura.addHTTPServer(onPort: 8090, with: yachtService.router)
 //Kitura.addHTTPServer(onPort: 8090, with: userService.router)
 
 // Static Service

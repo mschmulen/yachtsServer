@@ -8,8 +8,8 @@ let package = Package(
 	        .Package(url: "https://github.com/IBM-Swift/Kitura-StencilTemplateEngine.git", majorVersion: 1),
 			.Package(url: "https://github.com/IBM-Swift/Kitura-CouchDB.git", majorVersion: 1),
 			//.Package(url: "../yachtsShare", majorVersion: 0)
-			// .Package(url: "https://github.com/mschmulen/yachtsShare.git", Version(0, 0, 1))
-			.Package(url: "https://github.com/mschmulen/yachtsShare.git", majorVersion: 0)
+			//.Package(url: "https://github.com/mschmulen/yachtsShare.git", majorVersion: 0)				
+			.Package(url: "https://github.com/mschmulen/yachtsShare.git", Version(0, 0, 3))
 	],
 	exclude: ["Tools"]
 )

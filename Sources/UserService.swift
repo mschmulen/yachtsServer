@@ -7,34 +7,22 @@ import SwiftyJSON
 import CouchDB
 import yachtsShare
 
+//extension User {
+//  func serialize() -> JSON {
+//    let model:[String: Any] = serialize()
+//    let json = JSON(model)
+//    return json
+//  }
+//}
+
 class UserService {
 
-  lazy var database: Database = {
-    let dbName = "users"
-    let connectionProperties = ConnectionProperties(host: "localhost", port: 5984, secured: false)
-    let client = CouchDBClient(connectionProperties: connectionProperties)
-    let database = client.database(dbName)
-    return database
-
-  }()
-
-  lazy var router: Router = {
-    let router = Router()
-
-    router.post("/", middleware: BodyParser())
-    router.get("/users", handler: self.getAllModels)     // GetAll
-    router.get("/user/:id", handler: self.getModel)      // Get
-    //router.post("/user/:id", handler: self.updateModel)  // Update , MAS TODO
-    //router.post("/userNew", handler: self.createModel)   // function Create
-
-    return router
-  }()
-
+  var dataStore: (()-> Datastore)?
 
   func getAllModels(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
-    database.retrieveAll(includeDocuments: true) { docs, error in
+    dataStore?().database.retrieveAll(includeDocuments: true) { docs, error in
       if let error = error {
         let errorMessage = error.localizedDescription
         let status = ["status": "error", "message": errorMessage]
@@ -43,24 +31,17 @@ class UserService {
         response.status(.notFound).send(json: json)
       } else if let docs = docs {
 
-        //      let total_rows = docs["total_rows"].stringValue
-        //      let offset = docs["offset"].stringValue
-        //      Log.info("total_rows: \(total_rows)")
-        //      Log.info("offset: \(offset)")
-
         let status = ["status": "ok"]
-        var models = [Yacht]()
+        var models = [User]()
 
-        for (index,doc) in docs["rows"].arrayValue.enumerated() {
+        for (_,doc) in docs["rows"].arrayValue.enumerated() {
           var dictionary = [String: Any]()
           dictionary["id"] = doc["id"].stringValue
           dictionary["name"] = doc["doc"]["name"].stringValue
-          dictionary["url"] = doc["doc"]["url"].stringValue
-          dictionary["architect"] = doc["doc"]["architect"].stringValue
-          dictionary["likes"] = doc["doc"]["like"].intValue
+          dictionary["email"] = doc["doc"]["email"].stringValue
           dictionary["imageURL"] = doc["doc"]["imageURL"].stringValue
 
-          let m = Yacht.deserialize(dictionary: dictionary)
+          let m = User.deserialize(dictionary: dictionary)
           models.append(m)
         }
 
@@ -84,7 +65,7 @@ class UserService {
       return
     }
 
-    database.retrieve(yacht) { doc, error in
+    dataStore?().database.retrieve(yacht) { doc, error in
 
       if let error = error {
         let errorMessage = error.localizedDescription
@@ -99,12 +80,10 @@ class UserService {
         var dictionary = [String: Any]()
         dictionary["id"] = doc["_id"].stringValue
         dictionary["name"] = doc["name"].stringValue
-        dictionary["url"] = doc["url"].stringValue
-        dictionary["architect"] = doc["architect"].stringValue
-        dictionary["likes"] = doc["like"].intValue
+        dictionary["email"] = doc["email"].stringValue
         dictionary["imageURL"] = doc["imageURL"].stringValue
 
-        let model = Yacht.deserialize(dictionary: dictionary)
+        let model = User.deserialize(dictionary: dictionary)
 
         let result: [String: Any] = ["result": status, "data": model.serialize() as [String:Any] ]
         let json = JSON(result)
@@ -112,7 +91,6 @@ class UserService {
       }
     }
   }
-
-
   
+
 }
