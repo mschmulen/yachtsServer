@@ -18,7 +18,8 @@ extension Yacht {
 
 class YachtService {
 
-  public let getAllModels:RouterHandler = { request,response,next in
+  //Find all instances matched by filter from the datastore
+  public let getAll:RouterHandler = { request,response,next in
     defer { next() }
     
     SingletonDatastore.sharedInstance.database.retrieveAll(includeDocuments: true) { docs, error in
@@ -63,16 +64,16 @@ class YachtService {
     }
   }
 
+  // find a model instance by id from the datastore
   public let getModel:RouterHandler = { request,response,next in
     defer { next() }
 
-    guard let yacht = request.parameters["id"] else {
+    guard let id = request.parameters["id"] else {
       response.status(.badRequest).send("Missing id")
       return
     }
 
-    SingletonDatastore.sharedInstance.database.retrieve(yacht) { doc, error in
-
+    SingletonDatastore.sharedInstance.database.retrieve(id) { doc, error in
       if let error = error {
         let errorMessage = error.localizedDescription
         let status = ["status": "error", "message": errorMessage]
@@ -100,8 +101,38 @@ class YachtService {
     }
   }
 
-  // post, create new
-  public let createModel:RouterHandler = { request,response,next in
+  // delete a model instance by id from the datastore
+  public let deleteModel:RouterHandler = { request,response,next in
+    defer { next() }
+
+    guard let id = request.parameters["id"] else {
+      response.status(.badRequest).send("Missing id")
+      return
+    }
+
+    // MAS TODO verify the revision
+    let revision = ""
+
+    SingletonDatastore.sharedInstance.database.delete(id, rev: revision) { error in
+
+      if let error = error {
+        let errorMessage = error.localizedDescription
+        let status = ["status": "error", "message": errorMessage]
+        let	result = ["result": status]
+        let json = JSON(result)
+        response.status(.notFound).send(json: json)
+      } else {
+        let status = ["status": "ok"]
+
+        let result: [String: Any] = ["result": status, "message": "instance \(id) deleted" ]
+        let json = JSON(result)
+        response.status(.OK).send(json: json)
+      }
+    }
+  }
+
+  //Create a new instance of the model and persist it in the datastore
+  public let postCreate:RouterHandler = { request,response,next in
 
     defer { next() }
 
@@ -153,7 +184,15 @@ class YachtService {
   }
 
 
-  public let updateModel:RouterHandler = { request,response,next in
+  // Update an existing model instance or insert a new one in the datastore
+  public let putModel:RouterHandler = { request,response,next in
+    defer { next() }
+
+    // MAS TOD Put model ( use the id in the payload )
+  }
+
+
+  public let putUpdateModel:RouterHandler = { request,response,next in
     defer { next() }
 
     guard let id = request.parameters["id"] else {
@@ -200,8 +239,8 @@ class YachtService {
     //    }
 
   }
-
-  // like a specific yacht
+  
+  // custom method
   public let incrimentLike:RouterHandler = { request,response,next in
     defer { next() }
 

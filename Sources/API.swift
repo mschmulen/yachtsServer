@@ -22,20 +22,58 @@ class API {
     }
 
     let router = Router()
-
-    //Yachts Route
     router.post("/", middleware: BodyParser())
-    router.get("/yachts", handler: yachtService.getAllModels )
-    router.get("/yacht/:id", handler:  yachtService.getModel)      // Get
-    //router.post("/yacht/:id", handler: self.yachtService.updateModel)  // Update , MAS TODO
-    router.get("/yachtLike/:id", handler: yachtService.incrimentLike)    // function Like with Get
-    router.post("/yachtNew", handler: yachtService.createModel)   // function Create
 
-    //Users Route
-    //router.post("/", middleware: BodyParser())
-    router.get("/users", handler: userService.getAllModels)     // GetAll
-    router.get("/user/:id", handler: userService.getModel)      // Get
-    
+    // ---------------------------
+    // Yachts Route
+    // ---------------------------
+
+    // Find all instances matched by filter from the datastore
+    router.get("/yachts", handler: yachtService.getAll)
+
+    // Create a new instance of the model and persist it in the datastore
+    router.post("/yachts", handler: yachtService.postCreate) // rename postCreate
+
+    // Update an existing model instance or insert a new one in the datastore
+    router.put("/yachts", handler: yachtService.putModel) // formerly .updateModel)
+
+    // Update attributes for a model instance and persist in the datastore
+    router.put("/yachts/:id", handler:  yachtService.putUpdateModel)
+
+    // HEAD , check if the model instance exists in the datastore
+//    router.head("/yachts/:id", handler:  yachtService.headExists)
+
+    // find a model instance by id from the datastore
+    router.get("/yachts/:id", handler:  yachtService.getModel)
+
+    // delete a model instance by id from the datastore
+    router.delete("/yachts/:id", handler:  yachtService.deleteModel)
+
+    // check if the model instance exists in the datastore
+//    router.get("/yachts/:id/exists", handler:  yachtService.getExists)
+
+    // count instances of the model matched by where from the datastore
+//        router.get("/yachts/:id/count", handler:  yachtService.getCount)
+
+    // find the first instance of the model matched by filter from the datastore
+//        router.get("/yachts/findOne", handler:  yachtService.getFindOne)
+
+    // update instances of the model matched by where from the datastore
+//        router.post("/yacht/update", handler:  yachtService.postUpdate)
+
+    // custom method
+    router.get("/yachtLike/:id", handler: yachtService.incrimentLike)
+
+    // ---------------------------
+    // Users Route
+    // ---------------------------
+
+    //Find all instances matched by filter from the datastore
+    router.get("/users", handler: userService.getAll)     // GetAll
+
+    //find a model instance by id from the datastore
+    router.get("/users/:id", handler:  userService.getModel)
+
     return router
   }()
 

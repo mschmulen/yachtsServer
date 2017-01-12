@@ -18,8 +18,8 @@ import yachtsShare
 class UserService {
 
   var dataStore: (()-> Datastore)?
-
-  func getAllModels(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
+  
+  func getAll(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
     dataStore?().database.retrieveAll(includeDocuments: true) { docs, error in

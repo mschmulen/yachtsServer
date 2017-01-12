@@ -4,8 +4,6 @@ import Foundation
 import LoggerAPI
 import HeliumLogger
 import SwiftyJSON
-//import CouchDB
-//import yachtsShare
 
 class StaticService {
 

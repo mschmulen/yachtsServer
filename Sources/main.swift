@@ -14,19 +14,15 @@ let router = Router()
 router.post("/", middleware: BodyParser())
 
 let api = API()
-//let yachtService = YachtService()
-//let userService = UserService()
+
 //let staticService = StaticService()
 
 // ---------------------------------
 // static pages and html content
 // ---------------------------------
 
-//Kitura.addHTTPServer(onPort: 8090, with: router)
 
 Kitura.addHTTPServer(onPort: 8090, with: api.router)
-//Kitura.addHTTPServer(onPort: 8090, with: yachtService.router)
-//Kitura.addHTTPServer(onPort: 8090, with: userService.router)
 
 // Static Service
 //let staticServer = Kitura.addHTTPServer(onPort: 8090, with: staticService.router)
