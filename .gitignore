@@ -1,4 +1,11 @@
 .DS_Store
+
+## swift
 /.build
 /Packages
 /*.xcodeproj
+
+## docker
+.idea/
+*.iml
+env

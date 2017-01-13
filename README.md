@@ -65,3 +65,64 @@ building and running with xCode :
 
 - [http://localhost:8090/](http://localhost:8090/)
 - [http://localhost:8090/yachts](http://localhost:8090/yachts)
+
+
+
+##Deploying
+
+
+####Deploying via ec2 docker:
+
+TBD
+
+####DigitalOcean:
+
+Prerequisites: 
+
+- docker machine [https://www.docker.com/products/docker-machine](https://www.docker.com/products/docker-machine)
+
+
+Getting up and running:
+
+create the droplet: `docker-machine create --driver digitalocean --digitalocean-access-token [TOKEN] yachtsServer`
+
+set the environment: `docker-machine env yachtsServer`
+
+configure shell: `eval $(docker-machine env yachtsServer)`
+
+
+
+
+
+
+build our image: `docker build -t swift-server-image .`
+
+run the image on the host: `docker run --name webserver -p 80:8080 swift-server-image`
+
+run the image on the host: `docker run --name webserver -p 80:8090 swift-server-image` . The -p option is used to expose port 80 from the nginx container and make it accessible on port 8090 of the swift-server-image host
+
+
+Misc:
+
+get the ip address: `docker-machine ip yachtsServer`
+
+inspect: `docker-machine inspect yachtsServer`
+
+show docker machines: `docker-machine ls`
+
+connect to the docker machine: `docker-machine ssh`
+
+stop: `docker-machine stop yachtsServer`
+
+remove: `docker-machine rm yachtServer`
+
+
+####Deploying via bluemix:
+
+1. bluemix login
+1. cf push "yachts"
+
+delete your app with : `cf delete "yachts"`
+
+
+
