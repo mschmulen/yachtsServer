@@ -80,6 +80,7 @@ TBD
 Prerequisites: 
 
 - docker machine [https://www.docker.com/products/docker-machine](https://www.docker.com/products/docker-machine)
+- digital ocean TOKEN
 
 
 Getting up and running:
@@ -93,7 +94,6 @@ configure shell: `eval $(docker-machine env yachtsServer)`
 build the image: `docker build -t swift-server .`
 
 run the image on the host: `docker run --name webserver -p 80:8090 swift-server` . The -p option is used to expose port 80 from the nginx container and make it accessible on port 8090 of the swift-server-image host
-
 
 Misc:
 
@@ -109,12 +109,10 @@ stop: `docker-machine stop yachtsServer`
 
 remove: `docker-machine rm yachtServer`
 
-
 verify docker: 
 
 `docker run -d -p 8000:80 --name webserver kitematic/hello-world-nginx `
 `open http://104.236.7.214:8000/`
-
 
 ####Deploying via bluemix:
 

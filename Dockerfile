@@ -1,6 +1,9 @@
 
 #FROM ubuntu:15.10
 FROM ubuntu:16.04
+
+ENV SWIFT_VERSION 3.0.2-RELEASE
+ENV SWIFT_PLATFORM ubuntu16.04
 ENV SWIFT_INSTALL_URL https://swift.org/builds/swift-3.0.2-release/ubuntu1604/swift-3.0.2-RELEASE/swift-3.0.2-RELEASE-ubuntu16.04.tar.gz
 
 # Install Dependencies
@@ -20,6 +23,8 @@ RUN wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import - && \
 # Download and install Swift
 RUN SWIFT_ARCHIVE_NAME=swift-$SWIFT_VERSION-$SWIFT_PLATFORM && \
     SWIFT_URL=$SWIFT_INSTALL_URL && \
+	echo "SWIFT_URL: $SWIFT_URL" && \
+	echo "SWIFT_ARCHIVE_NAME: $SWIFT_ARCHIVE_NAME" && \	
     wget $SWIFT_URL && \
     wget $SWIFT_URL.sig && \
     tar -xvzf $SWIFT_ARCHIVE_NAME.tar.gz -C / --strip 1 && \
@@ -34,7 +39,7 @@ Expose 8090
 ADD . /yachtsServer
 WORKDIR /yachtsServer
 #RUN swift build --configuration release
-RUN swift build
+#RUN swift build
 #ENTRYPOINT [".build/release/yachtsServer"]
 #ENTRYPOINT [".build/debug/yachtsServer"]
 
