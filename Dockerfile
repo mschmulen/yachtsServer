@@ -39,8 +39,8 @@ Expose 8090
 ADD . /yachtsServer
 WORKDIR /yachtsServer
 #RUN swift build --configuration release
-#RUN swift build
 #ENTRYPOINT [".build/release/yachtsServer"]
-#ENTRYPOINT [".build/debug/yachtsServer"]
+RUN swift build
+ENTRYPOINT [".build/debug/yachtsServer"]
 
 
