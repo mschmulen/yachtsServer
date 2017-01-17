@@ -21,25 +21,12 @@ you can verfy swift was configured correctly with `docker run -it yachts-swift-s
 
 ####local docker workflow
 
-After building the yachts-swift-server image:
+After building the yachts-swift-server image (instructions above):
 
 1. terminal to the container `docker run -it yachts-swift-server /bin/bash`
 1. `pwd` to confirm SwiftServer folder
 1. clean and build `rm -rf .build/ && swift build`
 1. run the server from the terminal with `.build/debug/yachtsServer`
-
----
-
-####run the docker hub twostraws/server-side-swift image
-```
-mkdir docker-server
-cd docker-server
-docker run -itv $(pwd):/swiftServer --name swiftServer -w /swiftServer -p 8089:8089 -p 8090:8090 -p 5984:5984 twostraws/server-side-swift /bin/bash
-```
-
-run via twostraws image `docker run -itv $(pwd):/swiftServer --name swiftServer -w /swiftServer -p 8089:8089 -p 8090:8090 -p 5984:5984 twostraws/server-side-swift /bin/bash`
-
-
 
 #### clone the repo to the shared folder
 ```
@@ -180,6 +167,9 @@ https://hub.docker.com/r/rocker/drd/~/dockerfile/
 
 Simple swift docker configuration [https://developer.ibm.com/swift/2015/12/15/running-swift-within-docker/](https://developer.ibm.com/swift/2015/12/15/running-swift-within-docker/) 
 
+
+--- 
+
 ###Misc Notes
 
 ####TODO 
@@ -196,6 +186,19 @@ docker attach yachts-swift-server
 --- 
 
 docker run --privileged -i -t --name swiftfun swiftdocker/swift:latest /bin/bash
+
+
+---
+
+
+####run the docker hub twostraws/server-side-swift image
+```
+mkdir docker-server
+cd docker-server
+docker run -itv $(pwd):/swiftServer --name swiftServer -w /swiftServer -p 8089:8089 -p 8090:8090 -p 5984:5984 twostraws/server-side-swift /bin/bash
+```
+
+run via twostraws image `docker run -itv $(pwd):/swiftServer --name swiftServer -w /swiftServer -p 8089:8089 -p 8090:8090 -p 5984:5984 twostraws/server-side-swift /bin/bash`
 
 
 

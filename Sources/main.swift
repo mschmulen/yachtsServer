@@ -21,7 +21,6 @@ let api = API()
 // static pages and html content
 // ---------------------------------
 
-
 Kitura.addHTTPServer(onPort: 8090, with: api.router)
 
 // Static Service
