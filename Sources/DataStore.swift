@@ -13,15 +13,18 @@ public class SingletonDatastore {
 
   public var database: Database
   private let databaseName:String
-  private let connectionProperties = ConnectionProperties(host: "localhost", port: 5984, secured: false)
+  private let connectionProperties:ConnectionProperties// = ConnectionProperties(host: "localhost", port: 5984, secured: false)
 
   static let sharedInstance : Datastore = {
-    let instance = Datastore(dbName:"yachts")
+    let host = "localhost"
+    let port:Int16 = 5984
+    let instance = Datastore(host:host, port:port, dbName:"yachts")
     return instance
   }()
 
-  init( dbName : String) {
+  init(host:String, port:Int16, dbName : String) {
     self.databaseName = dbName
+    connectionProperties = ConnectionProperties(host: host, port: port, secured: false)
     let client = CouchDBClient(connectionProperties: connectionProperties)
     database = client.database(databaseName)
   }
@@ -32,10 +35,11 @@ public class Datastore {
 
   public var database: Database
   private let databaseName:String
-  private let connectionProperties = ConnectionProperties(host: "localhost", port: 5984, secured: false)
+  private let connectionProperties:ConnectionProperties// = ConnectionProperties(host: "localhost", port: 5984, secured: false)
 
-  init( dbName : String) {
+  init(host:String, port:Int16, dbName : String) {
     self.databaseName = dbName
+    connectionProperties = ConnectionProperties(host: "localhost", port: 5984, secured: false)
     let client = CouchDBClient(connectionProperties: connectionProperties)
     database = client.database(databaseName)
   }
