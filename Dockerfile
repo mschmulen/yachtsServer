@@ -61,6 +61,9 @@ Expose 80
 Expose 8080
 Expose 8090
 
+#couch db port
+Expose 5984
+
 # Add swift to the path
 ENV PATH /usr/bin:$PATH
 

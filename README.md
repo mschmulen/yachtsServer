@@ -14,7 +14,7 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 1. from the yachtsServer repo : `cd yachtsServer`
 1. build the image: `docker build -t yachts-swift-server .`
 1. verify the image was build: `docker images`
-1. run the docker image with: `docker run -it --name webserver -p 8090:8090 yachts-swift-server` this will name the service ‘webserver’, replace the `-p 80:8090` to make the image’s port 8090 available on the hosts port 80.
+1. run the docker image with: `docker run -it --name webserver -p 8090:8090 -p 5984:5984 yachts-swift-server` this will name the service ‘webserver’, replace the `-p 80:8090` to make the image’s port 8090 available on the hosts port 80.
 1. open a web page http://localhost:8090/ to verify the server is runing  pr `http://localhost:8090/yachts` to verify the API is working
 
 you can verfy swift was configured correctly with `docker run -it yachts-swift-server /bin/bash` and `swift --version` from the interactive terminal
