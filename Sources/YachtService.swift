@@ -153,7 +153,7 @@ class YachtService {
 
     // MAS TODO move to shared
     let fields = ["name", "architect", "url"]
-    var yacht = [String: Any]()
+    var postData = [String: Any]()
 
     switch ( values ) {
     case .json(let body):
@@ -161,7 +161,7 @@ class YachtService {
 
       for field in fields {
         if let value = body[field].string {
-          yacht[field] = value
+          postData[field] = value
           continue
         }
         try response.status(.badRequest).end()
@@ -174,7 +174,7 @@ class YachtService {
       for field in fields {
         if let value = body[field]?.trimmingCharacters(in: .whitespacesAndNewlines) {
           if value.characters.count > 0 {
-            yacht[field] = value.removingHTMLEncoding()
+            postData[field] = value.removingHTMLEncoding()
             continue
           }
         }
@@ -189,8 +189,8 @@ class YachtService {
       try response.status(.badRequest).end()
     }//end switch
 
-    yacht["likes"] = 0
-    let json = JSON(yacht)
+    postData["likes"] = 0
+    let json = JSON(postData)
 
     SingletonDatastore.sharedInstance.database.create(json) { id, revision, doc, error in
 

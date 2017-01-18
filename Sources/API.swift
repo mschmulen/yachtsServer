@@ -32,7 +32,7 @@ class API {
     router.get("/yachts", handler: yachtService.getAll)
 
     // Create a new instance of the model and persist it in the datastore
-    router.post("/yachts", handler: yachtService.postCreate) // rename postCreate
+    router.post("/yachts", handler: yachtService.postCreate)
 
     // Update an existing model instance or insert a new one in the datastore
     router.put("/yachts", handler: yachtService.putModel) // formerly .updateModel)
@@ -73,6 +73,13 @@ class API {
 
     //find a model instance by id from the datastore
     router.get("/users/:id", handler:  userService.getModel)
+
+    // delete a model instance by id from the datastore
+    router.delete("/users/:id", handler:  userService.deleteModel)
+
+    // Create a new instance of the model and persist it in the datastore
+    router.post("/users", handler: userService.postCreate)
+
 
     return router
   }()
