@@ -110,29 +110,110 @@ class YachtService {
       return
     }
 
-    // MAS TODO verify the revision
-    let revision = ""
-
-    SingletonDatastore.sharedInstance.database.delete(id, rev: revision) { error in
-
+    SingletonDatastore.sharedInstance.database.retrieve(id) { doc, error in
       if let error = error {
         let errorMessage = error.localizedDescription
         let status = ["status": "error", "message": errorMessage]
         let	result = ["result": status]
         let json = JSON(result)
-        response.status(.notFound).send(json: json)
-      } else {
-        let status = ["status": "ok"]
 
-        let result: [String: Any] = ["result": status, "message": "instance \(id) deleted" ]
-        let json = JSON(result)
-        response.status(.OK).send(json: json)
-      }
-    }
+        response.status(.notFound).send(json: json)
+        //next()
+      } else if let doc = doc {
+        var newDocument = doc
+        let id = doc["_id"].stringValue
+        let rev = doc["_rev"].stringValue
+
+        SingletonDatastore.sharedInstance.database.delete(id, rev: rev) { error in
+          if let error = error {
+            let errorMessage = error.localizedDescription
+            let status = ["status": "error", "message": errorMessage]
+            let	result = ["result": status]
+            let json = JSON(result)
+            response.status(.notFound).send(json: json)
+          } else {
+            let status = ["status": "ok"]
+            let result: [String: Any] = ["result": status, "message": "instance \(id) deleted" ]
+            let json = JSON(result)
+            response.status(.OK).send(json: json)
+          }
+        }
+      }//end if let doc
+    }//end retrieve by id so as to get a revision number
   }
 
   //Create a new instance of the model and persist it in the datastore
   public let postCreate:RouterHandler = { request,response,next in
+    defer { next() }
+
+    guard let values = request.body else {
+      try response.status(.badRequest).end()
+      return
+    }
+
+    // MAS TODO move to shared
+    let fields = ["name", "architect", "url"]
+    var yacht = [String: Any]()
+
+    switch ( values ) {
+    case .json(let body):
+      print("json encoded \(body)")
+
+      for field in fields {
+        if let value = body[field].string {
+          yacht[field] = value
+          continue
+        }
+        try response.status(.badRequest).end()
+        return
+      }
+
+    case .urlEncoded(let body) :
+      print("url encoded \(body)")
+
+      for field in fields {
+        if let value = body[field]?.trimmingCharacters(in: .whitespacesAndNewlines) {
+          if value.characters.count > 0 {
+            yacht[field] = value.removingHTMLEncoding()
+            continue
+          }
+        }
+
+        try response.status(.badRequest).end()
+        return
+      }
+    case .multipart(let body) :
+      print( " this is a multipart post and is not supported")
+      try response.status(.badRequest).end()
+    default:
+      try response.status(.badRequest).end()
+    }//end switch
+
+    yacht["likes"] = 0
+    let json = JSON(yacht)
+
+    SingletonDatastore.sharedInstance.database.create(json) { id, revision, doc, error in
+
+      if let id = id {
+        let status = ["status": "ok", "id": id]
+        let	result = ["result": status]
+        let json = JSON(result)
+
+        response.status(.OK).send(json: json)
+      } else {
+        let errorMessage = error?.localizedDescription ?? "Unknown error"
+        let status = ["status": "error", "message": errorMessage]
+        let	result = ["result": status]
+        let json = JSON(result)
+
+        response.status(.internalServerError).send(json: json)
+      }
+    }
+
+  }
+
+  //Create a new instance of the model and persist it in the datastore
+  public let postCreateURLEncoded:RouterHandler = { request,response,next in
 
     defer { next() }
 
@@ -146,6 +227,7 @@ class YachtService {
       return
     }
 
+    // MAS TODO move to shared
     let fields = ["name", "architect", "url"]
     var yacht = [String: Any]()
 
@@ -182,6 +264,7 @@ class YachtService {
       }
     }
   }
+
 
 
   // Update an existing model instance or insert a new one in the datastore
