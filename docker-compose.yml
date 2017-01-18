@@ -7,13 +7,21 @@ db:
     - COUCHDB_USER=matt
     - COUCHDB_PASSWORD=123456
 
-server:
+seed-db:
+  image: ibmcom/swift-ubuntu
+  volumes:
+    - .:/root/yachtsServer
+  command: yachtsServer/Tools/seed_couchdb.sh --username=matt --password=123456 --url=http://db:5984
+  links:
+    - db
+
+app:
   build: ./
 #  image: yachts-swift-server:tag
   ports:
     - "8090:8090"
-#  volumes:
-#    - .:/root/yachtsServer
+  volumes:
+    - .:/root/yachtsServer
   command: bash -c "rm -rf rm .build/ && swift build && .build/debug/yachtsServer"
-#  links:
-#      - db:localhost
+  links:
+      - db:localhost
