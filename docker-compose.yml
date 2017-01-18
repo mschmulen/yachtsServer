@@ -7,7 +7,8 @@ db:
     - COUCHDB_PASSWORD=123456
 
 server:
-  image: ibmcom/swift-ubuntu
+  build: ./
+  image: yachts-swift-server:tag
   ports:
     - "8090:8090"
 #  volumes:
