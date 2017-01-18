@@ -38,6 +38,7 @@ cd yachtsServer
 
 - start the couchdb server from within the docker container with `/etc/init.d/couchdb start`
 - initialize the db from within the docker container with `Tools/initDB.sh`
+- seed couchdb `Tools/seed_couchdb.sh --username=matt --password=123456`
 - build ad run the yacht-server from within the docker container with `swift build && .build/debug/yachtsServer`
 
 #### verify
