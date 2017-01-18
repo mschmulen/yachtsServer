@@ -1,3 +1,4 @@
+
 db:
   image: couchdb
   ports:
@@ -8,7 +9,7 @@ db:
 
 server:
   build: ./
-  image: yachts-swift-server:tag
+#  image: yachts-swift-server:tag
   ports:
     - "8090:8090"
 #  volumes:
