@@ -81,7 +81,6 @@ class UserService {
         dictionary["id"] = doc["_id"].stringValue
         dictionary["name"] = doc["name"].stringValue
         dictionary["email"] = doc["email"].stringValue
-        dictionary["imageURL"] = doc["imageURL"].stringValue
 
         let model = User.deserialize(dictionary: dictionary)
 
@@ -141,7 +140,7 @@ class UserService {
     }
 
     // MAS TODO move to shared
-    let fields = ["name", "email", "imageURL"]
+    let fields = ["name", "email"]
     var postData = [String: Any]()
 
     switch ( values ) {
