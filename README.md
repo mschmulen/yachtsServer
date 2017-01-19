@@ -7,7 +7,7 @@ Open source [Swift](https://swift.org/) support makes it possible for developers
 
 JavaScript and Java Android developers have some great examples on taking advantage of this such as how [airbnb leverages Isomorphic JavaScript](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) using [nodejs](https://nodejs.org/) to improve their application delivery.
 
-This is an exploration of how to share model structs and thier JSON dictionary serialization between the an API swift server and the native iOS app using [Swift Package Manager (SPM)](https://swift.org/package-manager/), [kitura](http://www.kitura.io/) web server framework and XCode for the mobile iOS client.
+This is an exploration of how to share model structs and their JSON and dictionary serialization between the an API swift server and the native iOS app using [Swift Package Manager (SPM)](https://swift.org/package-manager/), [kitura](http://www.kitura.io/) web server framework and XCode for the mobile iOS client.
 
 Use the [Building and running with Docker](#building-and-running-with-docker) to quick start the API server infastructure and then build and run the [companion mobile iPhone app](https://github.com/mschmulen/yachtsApp) to utilize the API on local host.
 
