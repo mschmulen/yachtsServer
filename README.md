@@ -43,8 +43,8 @@ Building and running with command line SPM (Swift Package Manager)
 
 1. Clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
 1. Build `swift build`
-1. Install and start [couchdb](http://couchdb.apache.org/) locally
-1. Seed the couchDB datastore - seed couchdb `Tools/seed_couchdb.sh --username=matt --password=123456` ( verify your local credentials)
+1. Insure the [couchdb](http://couchdb.apache.org/) data store is running local or via a local docker host
+1. Seed the couchDB datastore `Tools/seed_couchdb.sh --username=matt --password=123456` (verify your local credentials)
 1. Run the server with `.build/debug/yachtsServer`
 
 Building and running with XCode 
@@ -52,11 +52,11 @@ Building and running with XCode
 1. Clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
 1. Generating the xcode project `swift package generate-xcodeproj`
 1. Open in xCode `open yachtsServer.xcodeproj`
-1. Install and start [couchdb](http://couchdb.apache.org/) locally
-1. Seed the couchDB datastore - seed couchdb `Tools/seed_couchdb.sh --username=matt --password=123456` ( verify your local credentials)
+1. Insure the [couchdb](http://couchdb.apache.org/) data store is running local or via a local docker host
+1. Seed the couchDB datastore `Tools/seed_couchdb.sh --username=matt --password=123456` (verify your local credentials)
 1. Make sure and select the cmd line target then build and run with  `⌘ + r`
 
-Verify the server is running [localhost:8090](localhost:8090) and [http://localhost:8090/yachts])http://localhost:8090/yachts
+Verify the server is running [ttp://localhost:8090](ttp://localhost:8090) and [http://localhost:8090/yachts])http://localhost:8090/yachts
 
 ##Run the companion iOS app
 
@@ -81,21 +81,14 @@ Getting up and running:
 1. Build the image: `docker build -t swift-server .`
 1. Run the image on the host: `docker run --name webserver -p 80:8090 swift-server` . The -p option is used to expose port 80 from the nginx container and make it accessible on port 8090 of the swift-server-image host
 
-Misc notes:
+Docker machine common commands:
 
-get the ip address: `docker-machine ip yachtsServer`
-
-inspect: `docker-machine inspect yachtsServer`
-
-show docker machines: `docker-machine ls`
-
-connect to the docker machine: `docker-machine ssh yachtsServer`
-
-Stop and remove the machine from Digital Ocean:
-
-1. stop: `docker-machine stop yachtsServer`
-1. remove: `docker-machine rm yachtServer`
-
+- get the ip address: `docker-machine ip yachtsServer`
+- inspect: `docker-machine inspect yachtsServer`
+- show docker machines: `docker-machine ls`
+- connect to the docker machine: `docker-machine ssh yachtsServer`
+- stop: `docker-machine stop yachtsServer`
+- remove: `docker-machine rm yachtServer`
 
 ####Deploying via bluemix:
 
