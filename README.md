@@ -9,7 +9,7 @@ JavaScript and Java Android developers have some great examples on taking advant
 
 This is an exploration of how to share model structs and thier JSON dictionary serialization between the an API swift server and the native iOS app using [Swift Package Manager (SPM)](https://swift.org/package-manager/), [kitura](http://www.kitura.io/) web server framework and XCode for the mobile iOS client.
 
-Use the [Building and running with Docker](#Building-and-running-with-Docker) to quick start the API server infastructure and then build and run the [companion mobile iPhone app](https://github.com/mschmulen/yachtsApp) to utilize the API on local host.
+Use the [Building and running with Docker](#building-and-running-with-docker) to quick start the API server infastructure and then build and run the [companion mobile iPhone app](https://github.com/mschmulen/yachtsApp) to utilize the API on local host.
 
 - Swift Server [https://github.com/mschmulen/yachtsServer](https://github.com/mschmulen/yachtsServer)
 - iOS App [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
