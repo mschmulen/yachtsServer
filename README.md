@@ -15,11 +15,11 @@ This is an exploration of how to leverage common Isomorphic code in a native swi
 
 ##Building and running with Docker
 
-###prerequisites
+###Prerequisites
 
 - Docker [https://www.docker.com/](https://www.docker.com/)
 
-###running with docker compose 
+###Running with docker compose 
 
 1. clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
 1. copy example.env to .env with `cp example.env .env`
@@ -30,7 +30,7 @@ This is an exploration of how to leverage common Isomorphic code in a native swi
 
 ##Building and running local OSX configuration
 
-###prerequisites
+###Prerequisites
 
 - verify version 3.0.2 with `swift -v` or follow the getting started at [https://swift.org/getting-started/](https://swift.org/getting-started/)
 - XCode
