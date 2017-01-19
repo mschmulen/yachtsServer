@@ -57,8 +57,6 @@ public class Datastore {
       password: env.get("DB_PASSWORD") ?? "123456"
     )
 
-    print( "db connectionProperties \(dbName) \(connectionProperties.host) \(connectionProperties.port) \(connectionProperties.description)")
-
     self.databaseName = dbName
     //connectionProperties = ConnectionProperties(host: "localhost", port: 5984, secured: false)
     let client = CouchDBClient(connectionProperties: connectionProperties)
