@@ -6,6 +6,8 @@ db:
   environment:
     - COUCHDB_USER=matt
     - COUCHDB_PASSWORD=123456
+    - ADMIN_USER=matt
+    - ADMIN_PASSWORD=123456
 
 # seed-db:
 #   build: ./
@@ -23,6 +25,6 @@ app:
     - "8090:8090"
   volumes:
     - .:/root/yachtsServer
-  command: bash -c "Tools/seed_couchdb.sh && rm -rf rm .build/ && swift build && .build/debug/yachtsServer"
+  command: bash -c "rm -rf rm .build/ && swift build && .build/debug/yachtsServer"
   links:
       - db:localhost
