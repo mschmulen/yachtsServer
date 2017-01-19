@@ -62,5 +62,17 @@ curl -X PUT "$url/$database_users/_design/main_design" -u $username:$password \
 curl -H "Content-Type: application/json" -d @$current_dir/users.json \
     -X POST $url/$database_users/_bulk_docs -u $username:$password
 
+# architects	
+# delete and create database to ensure it's empty
+curl -X DELETE $url/$database_architects -u $username:$password
+curl -X PUT $url/$database_architects -u $username:$password 
+# Upload design document
+curl -X PUT "$url/$database_architects/_design/main_design" -u $username:$password \
+    -d @$current_dir/main_design.json 
+# Create data
+curl -H "Content-Type: application/json" -d @$current_dir/architects.json \
+    -X POST $url/$database_architects/_bulk_docs -u $username:$password
+
+
 echo
 echo "Finished populating couchdb database '$database' on '$url'"

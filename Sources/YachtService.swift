@@ -16,10 +16,12 @@ extension Yacht {
   }
 }
 
-class YachtService {
+public class YachtService {
+
+  var dataStore: (()-> Datastore)?
 
   //Find all instances matched by filter from the datastore
-  public let getAll:RouterHandler = { request,response,next in
+  public func getAll(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
     
     SingletonDatastore.sharedInstance.database.retrieveAll(includeDocuments: true) { docs, error in
@@ -65,7 +67,7 @@ class YachtService {
   }
 
   // find a model instance by id from the datastore
-  public let getModel:RouterHandler = { request,response,next in
+  public func getModel(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
     guard let id = request.parameters["id"] else {
@@ -102,7 +104,7 @@ class YachtService {
   }
 
   // delete a model instance by id from the datastore
-  public let deleteModel:RouterHandler = { request,response,next in
+  public func deleteModel(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
     guard let id = request.parameters["id"] else {
@@ -120,7 +122,7 @@ class YachtService {
         response.status(.notFound).send(json: json)
         //next()
       } else if let doc = doc {
-        var newDocument = doc
+//        var newDocument = doc
         let id = doc["_id"].stringValue
         let rev = doc["_rev"].stringValue
 
@@ -143,7 +145,7 @@ class YachtService {
   }
 
   //Create a new instance of the model and persist it in the datastore
-  public let postCreate:RouterHandler = { request,response,next in
+  public func postCreate(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
     guard let values = request.body else {
@@ -152,14 +154,12 @@ class YachtService {
     }
 
     // MAS TODO move to shared
-    let fields = ["name", "architect", "url"]
+    let createfields = ["name", "architect", "url"]
     var postData = [String: Any]()
 
     switch ( values ) {
     case .json(let body):
-      print("json encoded \(body)")
-
-      for field in fields {
+      for field in createfields {
         if let value = body[field].string {
           postData[field] = value
           continue
@@ -169,9 +169,7 @@ class YachtService {
       }
 
     case .urlEncoded(let body) :
-      print("url encoded \(body)")
-
-      for field in fields {
+      for field in createfields {
         if let value = body[field]?.trimmingCharacters(in: .whitespacesAndNewlines) {
           if value.characters.count > 0 {
             postData[field] = value.removingHTMLEncoding()
@@ -183,7 +181,7 @@ class YachtService {
         return
       }
     case .multipart(let body) :
-      print( " this is a multipart post and is not supported")
+      print( " this is a multipart post and is not supported \(body)")
       try response.status(.badRequest).end()
     default:
       try response.status(.badRequest).end()
@@ -209,12 +207,10 @@ class YachtService {
         response.status(.internalServerError).send(json: json)
       }
     }
-
   }
 
-  //Create a new instance of the model and persist it in the datastore
-  public let postCreateURLEncoded:RouterHandler = { request,response,next in
-
+  // MAS TODO
+  public func postUpdate(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
     guard let values = request.body else {
@@ -222,29 +218,42 @@ class YachtService {
       return
     }
 
-    guard case .urlEncoded(let body) = values else {
-      try response.status(.badRequest).end()
-      return
-    }
-
     // MAS TODO move to shared
-    let fields = ["name", "architect", "url"]
-    var yacht = [String: Any]()
+    let allfields = ["id","name","url","architect","imageURL","likes"]
+    var postData = [String: Any]()
 
-    for field in fields {
-      if let value = body[field]?.trimmingCharacters(in: .whitespacesAndNewlines) {
-        if value.characters.count > 0 {
-          yacht[field] = value.removingHTMLEncoding()
+    switch ( values ) {
+    case .json(let body):
+      for field in allfields {
+        if let value = body[field].string {
+          postData[field] = value
           continue
         }
+        try response.status(.badRequest).end()
+        return
       }
 
-      try response.status(.badRequest).end()
-      return
-    }
+    case .urlEncoded(let body):
+      for field in allfields {
+        if let value = body[field]?.trimmingCharacters(in: .whitespacesAndNewlines) {
+          if value.characters.count > 0 {
+            postData[field] = value.removingHTMLEncoding()
+            continue
+          }
+        }
 
-    yacht["likes"] = 0
-    let json = JSON(yacht)
+        try response.status(.badRequest).end()
+        return
+      }
+    case .multipart(let body):
+      print( " this is a multipart post and is not supported \(body)")
+      try response.status(.badRequest).end()
+    default:
+      try response.status(.badRequest).end()
+    }//end switch
+
+    postData["likes"] = 0
+    let json = JSON(postData)
 
     SingletonDatastore.sharedInstance.database.create(json) { id, revision, doc, error in
 
@@ -265,17 +274,13 @@ class YachtService {
     }
   }
 
-
-
   // Update an existing model instance or insert a new one in the datastore
-  public let putModel:RouterHandler = { request,response,next in
+  public func putModel(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
-
-    // MAS TOD Put model ( use the id in the payload )
+    // MAS TODO Put model ( use the id in the payload )
   }
 
-
-  public let putUpdateModel:RouterHandler = { request,response,next in
+  public func putUpdateModel(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
     guard let id = request.parameters["id"] else {
@@ -324,7 +329,7 @@ class YachtService {
   }
   
   // custom method
-  public let incrimentLike:RouterHandler = { request,response,next in
+  public func incrimentLike(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
     guard let id = request.parameters["id"] else {
@@ -340,7 +345,6 @@ class YachtService {
         let json = JSON(result)
 
         response.status(.notFound).send(json: json)
-        //next()
       } else if let doc = doc {
         var newDocument = doc
         let id = doc["_id"].stringValue
@@ -365,7 +369,7 @@ class YachtService {
     }
   }
   
-  func getfunction(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
+  public func getfunction(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
     response.status(.OK).send("Not yet implimented")
   }

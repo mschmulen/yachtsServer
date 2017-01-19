@@ -11,23 +11,17 @@ class API {
 
   lazy var router: Router = {
 
-    let userDataStore = Datastore(dbName: "users")
-    let userService = UserService()
-    userService.dataStore = {
-      return userDataStore
-    }
-
-    //currently the yachts sevice uses a singleton datastore , im not sure which I like the best so Im going to try both for a little while and see how it sorts out
-    let yachtService = YachtService()
-
-
-
     let router = Router()
     router.post("/", middleware: BodyParser())
 
     // ---------------------------
     // Yachts Route
     // ---------------------------
+    let yachtDataStore = Datastore(dbName: "yachts")
+    let yachtService = YachtService()
+    yachtService.dataStore = {
+      return yachtDataStore
+    }
 
     // Find all instances matched by filter from the datastore
     router.get("/yachts", handler: yachtService.getAll)
@@ -36,7 +30,7 @@ class API {
     router.post("/yachts", handler: yachtService.postCreate)
 
     // Update an existing model instance or insert a new one in the datastore
-    router.put("/yachts", handler: yachtService.putModel) // formerly .updateModel)
+    router.put("/yachts", handler: yachtService.putModel)
 
     // Update attributes for a model instance and persist in the datastore
     router.put("/yachts/:id", handler:  yachtService.putUpdateModel)
@@ -60,7 +54,7 @@ class API {
 //        router.get("/yachts/findOne", handler:  yachtService.getFindOne)
 
     // update instances of the model matched by where from the datastore
-//        router.post("/yacht/update", handler:  yachtService.postUpdate)
+    router.post("/yacht/update", handler:  yachtService.postUpdate)
 
     // custom method
     router.get("/yachtLike/:id", handler: yachtService.incrimentLike)
@@ -68,9 +62,14 @@ class API {
     // ---------------------------
     // Users Route
     // ---------------------------
+    let userDataStore = Datastore(dbName: "users")
+    let userService = UserService()
+    userService.dataStore = {
+      return userDataStore
+    }
 
     //Find all instances matched by filter from the datastore
-    router.get("/users", handler: userService.getAll)     // GetAll
+    router.get("/users", handler: userService.getAll)
 
     //find a model instance by id from the datastore
     router.get("/users/:id", handler:  userService.getModel)
@@ -80,7 +79,6 @@ class API {
 
     // Create a new instance of the model and persist it in the datastore
     router.post("/users", handler: userService.postCreate)
-
 
     return router
   }()

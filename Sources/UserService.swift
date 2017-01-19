@@ -7,14 +7,6 @@ import SwiftyJSON
 import CouchDB
 import yachtsShare
 
-//extension User {
-//  func serialize() -> JSON {
-//    let model:[String: Any] = serialize()
-//    let json = JSON(model)
-//    return json
-//  }
-//}
-
 class UserService {
 
   var dataStore: (()-> Datastore)?
@@ -107,7 +99,6 @@ class UserService {
         let json = JSON(result)
 
         response.status(.notFound).send(json: json)
-        //next()
       } else if let doc = doc {
         var newDocument = doc
         let id = doc["_id"].stringValue

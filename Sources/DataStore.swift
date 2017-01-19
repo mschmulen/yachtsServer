@@ -58,7 +58,6 @@ public class Datastore {
     )
 
     self.databaseName = dbName
-    //connectionProperties = ConnectionProperties(host: "localhost", port: 5984, secured: false)
     let client = CouchDBClient(connectionProperties: connectionProperties)
     database = client.database(databaseName)
   }
