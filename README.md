@@ -3,9 +3,9 @@ Evaluation demo for sharing swift server side code modules with native iOS clien
 
 ##Abstract
 
-Open source [Swift](https://swift.org/) support makes it possible for developers to use common code modules on both the server and in native iOS app clients.  Sharing code modules between the server and the client can accelerate development, improve reliability and reduce the overall cost of delivery and maintenance for swift iPhone apps.
+Open source [Swift](https://swift.org/) support makes it possible for developers to use common code modules on both the server and in native iOS app clients.  This project explores how sharing code modules between the server and the client may accelerate development, improve reliability and/or reduce the overall cost of delivery and maintenance for swift iPhone apps.
 
-JavaScript and Java Android developers have some great examples on taking advantage of this.  Javascript developers taking advantage of [nodejs](https://nodejs.org/) on the server and javascript on the web client such as how [airbnb leverages Isomorphic JavaScript](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) are good examples of how Swift iOS developers might leverage Swift on the server to improve their application delivery.
+JavaScript and Java Android developers have some great examples on taking advantage of this such as how [airbnb leverages Isomorphic JavaScript](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) using [nodejs](https://nodejs.org/) to improve their application delivery.
 
 This is an exploration of how to share model structs and thier JSON dictionary serialization between the the server and the native iOS app using  [Swift Package Manager (SPM)](https://swift.org/package-manager/), [kitura](http://www.kitura.io/) web server framework and XCode for the mobile iOS client.
 
