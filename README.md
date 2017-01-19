@@ -11,6 +11,9 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 
 ###running with docker compose 
 
+1. copy example.env to .env with `cp example.env .env`
+1. init and run with `docker-compose up` 
+
 #### run the docker container locally
 
 1. from the yachtsServer repo : `cd yachtsServer`
