@@ -18,34 +18,16 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 1. clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
 1. copy example.env to .env with `cp example.env .env`
 1. init and run with `docker-compose up`
-1. verify with open `htt://localhost:8090/yachts`
-
-
-#### clone the repo to the shared folder
-```
-
-
-```
-
-#### from within the docker container
-
-- start the couchdb server from within the docker container with `/etc/init.d/couchdb start`
-- seed couchdb `Tools/seed_couchdb.sh --username=matt --password=123456`
-- build ad run the yacht-server from within the docker container with `swift build && .build/debug/yachtsServer`
-
-
-#### misc commands 
-
-- run and attach: `docker start -i swiftServer`
+1. verify with open [http://localhost:8090/](http://localhost:8090/) and [http://localhost:8090/yachts](http://localhost:8090/yachts)
 
 ##Local OSX configuration
 
-####Swift 
+###prerequisites
 
 - verify version 3.0.2 with `swift -v` or follow the getting started at [https://swift.org/getting-started/](https://swift.org/getting-started/)
+- XCode
 
-
-####Building and running the server
+###Building and running the server with XCode
 
 building and running via command line:
 
@@ -53,23 +35,15 @@ from the server folder with `swift build && .build/debug/yachtsServer`
 
 building and running with xCode :
 
+1. clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
 1. Generating the xcode project `swift package generate-xcodeproj`
 1. Open in xCode `open yachtsServer.xcodeproj`
 1. Make sure and select the cmd line target then build and run with  `⌘ + r`
 
-#### Services and endpoints
-
-- [http://localhost:8090/](http://localhost:8090/)
-- [http://localhost:8090/yachts](http://localhost:8090/yachts)
-
-
+--- 
 
 ##Deploying
 
-
-####Deploying via ec2 docker:
-
-TBD
 
 ####DigitalOcean:
 
@@ -108,9 +82,6 @@ verify docker:
 `open http://104.236.7.214:8000/`
 
 
-#### Deploying on Heroku : TODO
-
-TODO : use heroku build pack [https://github.com/kylef/heroku-buildpack-swift](https://github.com/kylef/heroku-buildpack-swift)	
 
 ####Deploying via bluemix:
 
@@ -119,12 +90,20 @@ TODO : use heroku build pack [https://github.com/kylef/heroku-buildpack-swift](h
 
 delete your app with : `cf delete "yachts"`
 
+####Deploying via ec2 docker:
 
-####Misc Docker commands
+TBD
+
+#### Deploying on Heroku : TODO
+
+TBD
+
+reference: heroku build pack [https://github.com/kylef/heroku-buildpack-swift](https://github.com/kylef/heroku-buildpack-swift)	
+
+##Misc Docker commands
 
 - clean up dangling images `docker rmi $(docker images -f "dangling=true" -q)`
 - One liner to stop all of Docker containers: `docker stop $(docker ps -a -q)`
-
 
 ###Misc References
 
@@ -139,15 +118,12 @@ Digital Ocean Server Side Swift
 [https://medium.com/@LarsJK/easy-server-side-swift-with-docker-4c297feeeeb5#.1g5i8ilmq](https://medium.com/@LarsJK/easy-server-side-swift-with-docker-4c297feeeeb5#.1g5i8ilmq) and corresponding github repo [https://github.com/serversideswift/swift-docker/blob/master/Dockerfile](https://github.com/serversideswift/swift-docker/blob/master/Dockerfile)
 
 
-
 Couch DB Docker file reference [https://github.com/apache/couchdb-docker/blob/master/2.0-dev-docs/Dockerfile](https://github.com/apache/couchdb-docker/blob/master/2.0-dev-docs/Dockerfile)
 
 
 Docker Hub Swift Server [https://hub.docker.com/r/twostraws/server-side-swift/](https://hub.docker.com/r/twostraws/server-side-swift/) docker file reference 
 
 https://hub.docker.com/r/rocker/drd/~/dockerfile/
-
-
 
 Simple swift docker configuration [https://developer.ibm.com/swift/2015/12/15/running-swift-within-docker/](https://developer.ibm.com/swift/2015/12/15/running-swift-within-docker/) 
 
@@ -209,9 +185,15 @@ After building the yachts-swift-server image (instructions above):
 2. Verify CouchDB is running `open http://127.0.0.1:5984/_utils/` , `http://localhost:5984/`, or `curl -X GET http://localhost:5984`
 3. initialize with the script `Tools/initDB`
 
-#### verify
-`open http://localhost:8090/yachts`
+#### from within the docker container
 
+- start the couchdb server from within the docker container with `/etc/init.d/couchdb start`
+- seed couchdb `Tools/seed_couchdb.sh --username=matt --password=123456`
+- build ad run the yacht-server from within the docker container with `swift build && .build/debug/yachtsServer`
+
+#### misc commands 
+
+- run and attach: `docker start -i swiftServer`
 
 
 
