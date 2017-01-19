@@ -22,7 +22,7 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 1. verify with open [http://localhost:8090/](http://localhost:8090/) and [http://localhost:8090/yachts](http://localhost:8090/yachts)
 1. run the iOS app [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
 
-##Building and running Local OSX configuration
+##Building and running local OSX configuration
 
 ###prerequisites
 
