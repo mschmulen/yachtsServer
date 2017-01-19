@@ -7,6 +7,10 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 - Companion iOS App [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
 - Common shared Swift package for isomorphic models [https://github.com/mschmulen/yachtsShare](https://github.com/mschmulen/yachtsShare)
 
+##Abstract 
+
+Both web developers and in some cases Java Android developers have been able to take advantage of Isomorphic code sharing in the past years because their client language an tool chain is support on both there server side and the client.  iOS Objective-C developers often need to conform to REST service scheme definitions to take advantage of services that are often written in javaScript ( Node ) or Java, either using formal API specification tools such as [swagger](http://swagger.io/) . When the scheme changes the client code needs to be updated either via code generation or manually updating the model service binding code. The open sourcing of Swift https://swift.org/ a year ago has lead to the ability to run server side swift code, thus enabling iOS swift developers access to a pattern similar two what modern JavaScript developers have had access.  For more information checkout out how [airbnb leverages Isomorphic JavaScript](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) This is an exploration of how to leverage common Isomorphic code in a native swift iOS app and on the server.
+
 ##Building and running with Docker
 
 ###prerequisites
