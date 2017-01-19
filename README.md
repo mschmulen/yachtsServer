@@ -7,7 +7,7 @@ Open source [Swift](https://swift.org/) support on server machines makes it poss
 
 JavaScript and Java Android developers have some great examples on taking advantage of this such as how [airbnb leverages Isomorphic JavaScript](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) using [nodejs](https://nodejs.org/) to improve their application delivery.
 
-This app shares [kitura](http://www.kitura.io/) web API server side [model structs and their JSON and dictionary serializers](https://github.com/mschmulen/yachtsShare) with the native iOS mobile app using [Swift Package Manager (SPM)](https://swift.org/package-manager/) and [Cathage](https://github.com/Carthage/Carthage) to insure API model version dependencies and help with API schema migration.
+This app shares [kitura](http://www.kitura.io/) web API server side [model structs and their JSON and dictionary serializers](https://github.com/mschmulen/yachtsShare) with the native iOS mobile app using [Swift Package Manager (SPM)](https://swift.org/package-manager/) and [Cathage](https://github.com/Carthage/Carthage) to insure API model dependencies via semantic versioning.
 
 Use the [Building and running with Docker](#building-and-running-with-docker) to quick start the API server infastructure and then build and run the [companion mobile iPhone app](https://github.com/mschmulen/yachtsApp) to utilize the API on local host.
 
