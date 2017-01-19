@@ -7,7 +7,7 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 - Companion iOS App [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
 - Common shared Swift package for isomorphic models [https://github.com/mschmulen/yachtsShare](https://github.com/mschmulen/yachtsShare)
 
-##Docker
+##Building and running with Docker
 
 ###prerequisites
 
@@ -22,7 +22,7 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 1. verify with open [http://localhost:8090/](http://localhost:8090/) and [http://localhost:8090/yachts](http://localhost:8090/yachts)
 1. run the iOS app [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
 
-##Local OSX configuration
+##Building and running Local OSX configuration
 
 ###prerequisites
 
