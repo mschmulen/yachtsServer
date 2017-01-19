@@ -18,7 +18,9 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 1. clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
 1. copy example.env to .env with `cp example.env .env`
 1. init and run with `docker-compose up`
+1. intialize the data store with `Tools/seed_couchdb.sh` you can modify the seed data from the json doc files `Tools/yachts.json`
 1. verify with open [http://localhost:8090/](http://localhost:8090/) and [http://localhost:8090/yachts](http://localhost:8090/yachts)
+1. run the iOS app [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
 
 ##Local OSX configuration
 
@@ -39,8 +41,6 @@ building and running with xCode :
 1. Generating the xcode project `swift package generate-xcodeproj`
 1. Open in xCode `open yachtsServer.xcodeproj`
 1. Make sure and select the cmd line target then build and run with  `⌘ + r`
-
---- 
 
 ##Deploying
 
@@ -102,6 +102,11 @@ reference: heroku build pack [https://github.com/kylef/heroku-buildpack-swift](h
 
 ##Misc Docker commands
 
+- show images `docker images`
+- show images `docker ps -a`
+- docker run --privileged -i -t --name yachts-swift-server mschmulen/swift-server:latest /bin/bash
+- docker start yachts-swift-server
+- docker attach yachts-swift-server
 - clean up dangling images `docker rmi $(docker images -f "dangling=true" -q)`
 - One liner to stop all of Docker containers: `docker stop $(docker ps -a -q)`
 
@@ -134,14 +139,7 @@ Simple swift docker configuration [https://developer.ibm.com/swift/2015/12/15/ru
 
 ####TODO 
 
-push to Docker Hub repo so it can be run via 
-
-```
-docker pull mschmulen/swift-server
-docker run --privileged -i -t --name yachts-swift-server mschmulen/swift-server:latest /bin/bash
-docker start yachts-swift-server
-docker attach yachts-swift-server
-```
+- push to Docker Hub repo so it can be run via docker-compose reference
 
 --- 
 
