@@ -17,22 +17,22 @@ This is an exploration of how to leverage common Isomorphic code in a native swi
 
 ###Prerequisites
 
-- Docker [https://www.docker.com/](https://www.docker.com/)
+- Docker and docker-compose [https://www.docker.com/](https://www.docker.com/)
 
 ###Running with docker compose 
 
-1. clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
-1. copy example.env to .env with `cp example.env .env`
-1. init and run with `docker-compose up`
-1. intialize the data store with `Tools/seed_couchdb.sh` you can modify the seed data from the json doc files `Tools/yachts.json`
-1. verify with open [http://localhost:8090/](http://localhost:8090/) and [http://localhost:8090/yachts](http://localhost:8090/yachts)
-1. run the iOS app [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
+1. Clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
+1. Copy example.env to .env with `cp example.env .env`
+1. Init and run with `docker-compose up`
+1. Intialize the data store with `Tools/seed_couchdb.sh` you can modify the seed data from the json doc files `Tools/yachts.json`
+1. Verify with open [http://localhost:8090/](http://localhost:8090/) and [http://localhost:8090/yachts](http://localhost:8090/yachts)
+1. Run the iOS app [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
 
 ##Building and running local OSX configuration
 
 ###Prerequisites
 
-- verify version 3.0.2 with `swift -v` or follow the getting started at [https://swift.org/getting-started/](https://swift.org/getting-started/)
+- Verify version 3.0.2 with `swift -v` or follow the getting started at [https://swift.org/getting-started/](https://swift.org/getting-started/)
 - XCode
 
 ###Building and running the server with XCode or local SPM ( Swift Package Manager)
@@ -40,10 +40,10 @@ This is an exploration of how to leverage common Isomorphic code in a native swi
 Building and running with command line SPM (Swift Package Manager)
 
 1. Clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
-1. build `swift build`
+1. Build `swift build`
 1. Install and start [couchdb](http://couchdb.apache.org/) locally
 1. Seed the couchDB datastore - seed couchdb `Tools/seed_couchdb.sh --username=matt --password=123456` ( verify your local credentials)
-1. run the server with `.build/debug/yachtsServer`
+1. Run the server with `.build/debug/yachtsServer`
 
 Building and running with XCode 
 
@@ -56,11 +56,9 @@ Building and running with XCode
 
 Verify the server is running [localhost:8090](localhost:8090) and [http://localhost:8090/yachts])http://localhost:8090/yachts
 
-
 ##Run the companion iOS app
 
 Follow the instructions on the Companion Swift Server [https://github.com/mschmulen/yachtsServer](https://github.com/mschmulen/yachtsServer)
-
 
 --- 
 
@@ -70,18 +68,18 @@ Follow the instructions on the Companion Swift Server [https://github.com/mschmu
 
 Prerequisites: 
 
-- docker machine [https://www.docker.com/products/docker-machine](https://www.docker.com/products/docker-machine)
-- digital ocean TOKEN
+- Docker machine [https://www.docker.com/products/docker-machine](https://www.docker.com/products/docker-machine)
+- Digital ocean TOKEN
 
 Getting up and running:
 
-1. create the droplet: `docker-machine create --driver digitalocean --digitalocean-access-token [TOKEN] yachtsServer`
-1. get the environment: `docker-machine env yachtsServer`
-1. configure the environment: `eval $(docker-machine env yachtsServer)`
-1. build the image: `docker build -t swift-server .`
-1. run the image on the host: `docker run --name webserver -p 80:8090 swift-server` . The -p option is used to expose port 80 from the nginx container and make it accessible on port 8090 of the swift-server-image host
+1. Create the droplet: `docker-machine create --driver digitalocean --digitalocean-access-token [TOKEN] yachtsServer`
+1. Get the environment: `docker-machine env yachtsServer`
+1. Configure the environment: `eval $(docker-machine env yachtsServer)`
+1. Build the image: `docker build -t swift-server .`
+1. Run the image on the host: `docker run --name webserver -p 80:8090 swift-server` . The -p option is used to expose port 80 from the nginx container and make it accessible on port 8090 of the swift-server-image host
 
-Misc:
+Misc notes:
 
 get the ip address: `docker-machine ip yachtsServer`
 
