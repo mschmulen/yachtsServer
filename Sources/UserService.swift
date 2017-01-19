@@ -39,7 +39,7 @@ class UserService {
           dictionary["id"] = doc["id"].stringValue
           dictionary["name"] = doc["doc"]["name"].stringValue
           dictionary["email"] = doc["doc"]["email"].stringValue
-          dictionary["imageURL"] = doc["doc"]["imageURL"].stringValue
+          dictionary["avatarURL"] = doc["doc"]["avatarURL"].stringValue
 
           let m = User.deserialize(dictionary: dictionary)
           models.append(m)
