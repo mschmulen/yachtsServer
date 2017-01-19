@@ -1,5 +1,3 @@
-yachtsServer
-===
 
 Evaluation demo for using Isomorphic swift model structs on the server and the client.
 
