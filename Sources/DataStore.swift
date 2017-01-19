@@ -19,7 +19,6 @@ public class SingletonDatastore {
     //let host = "localhost"
     //let port:Int16 = 5984
     let dbName = "yachts"
-
     let instance = Datastore(dbName:"yachts")
     return instance
   }()
@@ -35,10 +34,6 @@ public class SingletonDatastore {
       username: env.get("DB_USERNAME") ?? "matt",
       password: env.get("DB_PASSWORD") ?? "123456"
     )
-
-    print( "db connectionProperties \(dbName) \(connectionProperties.host) \(connectionProperties.port) \(connectionProperties.description)")
-
-    //connectionProperties = ConnectionProperties(host: host, port: port, secured: false)
     let client = CouchDBClient(connectionProperties: connectionProperties)
     database = client.database(databaseName)
   }

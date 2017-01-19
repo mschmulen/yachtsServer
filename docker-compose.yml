@@ -11,7 +11,7 @@ seed-db:
   image: ibmcom/swift-ubuntu
   volumes:
     - .:/root/yachtsServer
-  command: yachtsServer/Tools/seed_couchdb.sh --username=matt --password=123456 --url=http://db:5984
+  command: ./yachtsServer/Tools/seed_couchdb.sh --username=matt --password=123456 --url=http://db:5984
   links:
     - db
 
