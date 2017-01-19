@@ -29,21 +29,36 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 - verify version 3.0.2 with `swift -v` or follow the getting started at [https://swift.org/getting-started/](https://swift.org/getting-started/)
 - XCode
 
-###Building and running the server with XCode
+###Building and running the server with XCode or local SPM ( Swift Package Manager)
 
-building and running via command line:
+Building and running with command line SPM (Swift Package Manager)
 
-from the server folder with `swift build && .build/debug/yachtsServer`
+1. Clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
+1. build `swift build`
+1. Install and start [couchdb](http://couchdb.apache.org/) locally
+1. Seed the couchDB datastore - seed couchdb `Tools/seed_couchdb.sh --username=matt --password=123456` ( verify your local credentials)
+1. run the server with `.build/debug/yachtsServer`
 
-building and running with xCode :
+Building and running with XCode 
 
-1. clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
+1. Clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
 1. Generating the xcode project `swift package generate-xcodeproj`
 1. Open in xCode `open yachtsServer.xcodeproj`
+1. Install and start [couchdb](http://couchdb.apache.org/) locally
+1. Seed the couchDB datastore - seed couchdb `Tools/seed_couchdb.sh --username=matt --password=123456` ( verify your local credentials)
 1. Make sure and select the cmd line target then build and run with  `⌘ + r`
 
-##Deploying
+Verify the server is running [localhost:8090](localhost:8090) and [http://localhost:8090/yachts])http://localhost:8090/yachts
 
+
+##Run the companion iOS app
+
+Follow the instructions on the Companion Swift Server [https://github.com/mschmulen/yachtsServer](https://github.com/mschmulen/yachtsServer)
+
+
+--- 
+
+##Deploying to a provider WIP 
 
 ####DigitalOcean:
 
@@ -51,7 +66,6 @@ Prerequisites:
 
 - docker machine [https://www.docker.com/products/docker-machine](https://www.docker.com/products/docker-machine)
 - digital ocean TOKEN
-
 
 Getting up and running:
 
@@ -76,12 +90,6 @@ Stop and remove the machine from Digital Ocean:
 1. stop: `docker-machine stop yachtsServer`
 1. remove: `docker-machine rm yachtServer`
 
-verify docker: 
-
-`docker run -d -p 8000:80 --name webserver kitematic/hello-world-nginx `
-`open http://104.236.7.214:8000/`
-
-
 
 ####Deploying via bluemix:
 
@@ -89,16 +97,6 @@ verify docker:
 1. cf push "yachts"
 
 delete your app with : `cf delete "yachts"`
-
-####Deploying via ec2 docker:
-
-TBD
-
-#### Deploying on Heroku : TODO
-
-TBD
-
-reference: heroku build pack [https://github.com/kylef/heroku-buildpack-swift](https://github.com/kylef/heroku-buildpack-swift)	
 
 ##Misc Docker commands
 
