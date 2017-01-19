@@ -9,7 +9,7 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 
 ##Abstract 
 
-The open sourcing of [Swift](https://swift.org/) a year ago has lead to the ability to run server side swift code, enabling the possibility for iOS swift developers to share code across both the server and the client. JavaScript and Java Android developers have been taking advantage of this to accelerate thier development and reduce the fragility of their client applicaions to server side changes. Case studies in how [airbnb leverages Isomorphic JavaScript](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) for this issue expemplifies the benifits of leveraging the same code modules on both the server and client.
+The open sourcing of [Swift](https://swift.org/) in December of 2015 has lead to the ability to run server side swift code, enabling the possibility for iOS swift developers to share code across both the server and the client. JavaScript and Java Android developers have been taking advantage of this to accelerate thier development and reduce the fragility of their client applicaions. Examples such as how [airbnb leverages Isomorphic JavaScript](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) can now be applied to native iOS and server side swift applications.
 
 This is an exploration of how to leverage common Isomorphic code in a native swift iOS app and on the server.
 
