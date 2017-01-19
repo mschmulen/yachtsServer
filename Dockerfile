@@ -18,9 +18,6 @@ RUN apt-get -q update && apt-get install --assume-yes apt-utils
 #requirement for Swift Module 'SSLService' ?
 RUN apt-get -q install -y libssl-dev
 
-#install couchdb
-RUN apt-get -q update && apt-get -q install couchdb -y
-
 #RUN echo "Install Dependencies"
 RUN apt-get -q update && \
     apt-get -q install -y \
@@ -57,22 +54,15 @@ RUN SWIFT_ARCHIVE_NAME=swift-$SWIFT_VERSION-$SWIFT_PLATFORM && \
     rm -rf $SWIFT_ARCHIVE_NAME* /tmp/* /var/tmp/*
 
 RUN echo "expose ports"
-Expose 80
-Expose 8080
+#Expose 80
+#Expose 8080
 Expose 8090
-
-#couch db port
-#Expose 5984
 
 # Add swift to the path
 ENV PATH /usr/bin:$PATH
 
 ADD . /yachtsServer
 WORKDIR /yachtsServer
-
-# Start and init the couch db server 
-#RUN /etc/init.d/couchdb start
-#RUN Tools/initDB.sh
 
 #Build the swift App
 #RUN swift build --configuration release
