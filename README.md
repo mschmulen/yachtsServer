@@ -1,10 +1,6 @@
 
 Evaluation demo for using Isomorphic swift model structs on the server and the client.
 
-- Companion Swift Server [https://github.com/mschmulen/yachtsServer](https://github.com/mschmulen/yachtsServer)
-- Companion iOS App [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
-- Common shared Swift package for isomorphic models [https://github.com/mschmulen/yachtsShare](https://github.com/mschmulen/yachtsShare)
-
 ##Abstract 
 
 Open source [Swift](https://swift.org/) support makes it possible for developers to use common code modules on both the server and in native iOS app clients.  Sharing code modules between the server and the client can accelerate development, improve reliability and reduce the overall cost of delivery and maintenance for swift iPhone apps.
@@ -12,6 +8,11 @@ Open source [Swift](https://swift.org/) support makes it possible for developers
 JavaScript and Java Android developers have some great examples on taking advantage of this.  Javascript developers taking advantage of nodejs on the server and javascript on the web client such as how [airbnb leverages Isomorphic JavaScript](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) are good examples of how Swift iOS developers might leverage Swift on the server to improve their application delivery.
 
 This is an exploration of how to leverage common Isomorphic code in a native swift iOS app and on the server.
+
+- Swift Server [https://github.com/mschmulen/yachtsServer](https://github.com/mschmulen/yachtsServer)
+- iOS App [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
+- Common shared Swift package for isomorphic models [https://github.com/mschmulen/yachtsShare](https://github.com/mschmulen/yachtsShare)
+
 
 ##Building and running with Docker
 
