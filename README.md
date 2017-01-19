@@ -9,35 +9,22 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 
 ##Docker
 
+###prerequisites
+
+- Docker [https://www.docker.com/](https://www.docker.com/)
+
 ###running with docker compose 
 
+1. clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
 1. copy example.env to .env with `cp example.env .env`
 1. init and run with `docker-compose up`
-1. veryfy with open `htt://localhost:8090/yachts`
+1. verify with open `htt://localhost:8090/yachts`
 
-#### run the docker container locally
-
-1. from the yachtsServer repo : `cd yachtsServer`
-1. build the image: `docker build -t yachts-swift-server .`
-1. verify the image was build: `docker images`
-1. run the docker image with: `docker run -it --name webserver -p 8090:8090 -p 5984:5984 yachts-swift-server` this will name the service ‘webserver’, replace the `-p 80:8090` to make the image’s port 8090 available on the hosts port 80.
-1. open a web page http://localhost:8090/ to verify the server is runing  pr `http://localhost:8090/yachts` to verify the API is working
-
-you can verfy swift was configured correctly with `docker run -it yachts-swift-server /bin/bash` and `swift --version` from the interactive terminal
-
-####local docker workflow
-
-After building the yachts-swift-server image (instructions above):
-
-1. terminal to the container `docker run -it yachts-swift-server /bin/bash`
-1. `pwd` to confirm SwiftServer folder
-1. clean and build `rm -rf .build/ && swift build`
-1. run the server from the terminal with `.build/debug/yachtsServer`
 
 #### clone the repo to the shared folder
 ```
-git clone git@github.com:mschmulen/yachtsServer
-cd yachtsServer 
+
+
 ```
 
 #### from within the docker container
@@ -46,8 +33,6 @@ cd yachtsServer
 - seed couchdb `Tools/seed_couchdb.sh --username=matt --password=123456`
 - build ad run the yacht-server from within the docker container with `swift build && .build/debug/yachtsServer`
 
-#### verify
-`open http://localhost:8090/yachts`
 
 #### misc commands 
 
@@ -57,15 +42,8 @@ cd yachtsServer
 
 ####Swift 
 
-version 3.0.2
+- verify version 3.0.2 with `swift -v` or follow the getting started at [https://swift.org/getting-started/](https://swift.org/getting-started/)
 
-`swift -v`
-
-####Configuring CouchDB
-
-1. Install CouchDB : http://couchdb.apache.org/#download 
-2. Verify CouchDB is running `open http://127.0.0.1:5984/_utils/` , `http://localhost:5984/`, or `curl -X GET http://localhost:5984`
-3. initialize with the script `Tools/initDB`
 
 ####Building and running the server
 
@@ -176,7 +154,7 @@ Simple swift docker configuration [https://developer.ibm.com/swift/2015/12/15/ru
 
 --- 
 
-###Misc Notes
+###Misc Notes (the Attic)
 
 ####TODO 
 
@@ -206,7 +184,33 @@ docker run -itv $(pwd):/swiftServer --name swiftServer -w /swiftServer -p 8089:8
 
 run via twostraws image `docker run -itv $(pwd):/swiftServer --name swiftServer -w /swiftServer -p 8089:8089 -p 8090:8090 -p 5984:5984 twostraws/server-side-swift /bin/bash`
 
+#### run the docker container locally
 
+1. from the yachtsServer repo : `cd yachtsServer`
+1. build the image: `docker build -t yachts-swift-server .`
+1. verify the image was build: `docker images`
+1. run the docker image with: `docker run -it --name webserver -p 8090:8090 -p 5984:5984 yachts-swift-server` this will name the service ‘webserver’, replace the `-p 80:8090` to make the image’s port 8090 available on the hosts port 80.
+1. open a web page http://localhost:8090/ to verify the server is runing  pr `http://localhost:8090/yachts` to verify the API is working
+
+you can verfy swift was configured correctly with `docker run -it yachts-swift-server /bin/bash` and `swift --version` from the interactive terminal
+
+####local docker workflow
+
+After building the yachts-swift-server image (instructions above):
+
+1. terminal to the container `docker run -it yachts-swift-server /bin/bash`
+1. `pwd` to confirm SwiftServer folder
+1. clean and build `rm -rf .build/ && swift build`
+1. run the server from the terminal with `.build/debug/yachtsServer`
+
+####Configuring CouchDB
+
+1. Install CouchDB : http://couchdb.apache.org/#download 
+2. Verify CouchDB is running `open http://127.0.0.1:5984/_utils/` , `http://localhost:5984/`, or `curl -X GET http://localhost:5984`
+3. initialize with the script `Tools/initDB`
+
+#### verify
+`open http://localhost:8090/yachts`
 
 
 
