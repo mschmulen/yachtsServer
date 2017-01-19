@@ -62,7 +62,7 @@ Expose 8080
 Expose 8090
 
 #couch db port
-Expose 5984
+#Expose 5984
 
 # Add swift to the path
 ENV PATH /usr/bin:$PATH
@@ -71,12 +71,12 @@ ADD . /yachtsServer
 WORKDIR /yachtsServer
 
 # Start and init the couch db server 
-RUN /etc/init.d/couchdb start
+#RUN /etc/init.d/couchdb start
 #RUN Tools/initDB.sh
 
 #Build the swift App
 #RUN swift build --configuration release
 #ENTRYPOINT [".build/release/yachtsServer"]
 
-RUN swift build
+#RUN swift build
 #ENTRYPOINT [".build/debug/yachtsServer"]

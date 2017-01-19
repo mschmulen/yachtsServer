@@ -9,6 +9,8 @@ Evaluation demo for using Isomorphic swift model structs on the server and the c
 
 ##Docker
 
+###running with docker compose 
+
 #### run the docker container locally
 
 1. from the yachtsServer repo : `cd yachtsServer`

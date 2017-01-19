@@ -5,6 +5,7 @@ import LoggerAPI
 import HeliumLogger
 import SwiftyJSON
 import CouchDB
+import DotEnv
 import yachtsShare
 
 //Singleton version of the datastore
@@ -15,17 +16,29 @@ public class SingletonDatastore {
   private let connectionProperties:ConnectionProperties
 
   static let sharedInstance : Datastore = {
-    let host = "localhost"
-    let port:Int16 = 5984
+    //let host = "localhost"
+    //let port:Int16 = 5984
     let dbName = "yachts"
 
-    let instance = Datastore(host:host, port:port, dbName:"yachts")
+    let instance = Datastore(dbName:"yachts")
     return instance
   }()
 
-  init(host:String, port:Int16, dbName : String) {
+  init(dbName : String) {
     self.databaseName = dbName
-    connectionProperties = ConnectionProperties(host: host, port: port, secured: false)
+
+    let env = DotEnv()
+    connectionProperties = ConnectionProperties(
+      host: env.get("DB_HOST") ?? "localhost",
+      port: Int16(env.getAsInt("DB_PORT") ?? 5984),
+      secured: env.getAsBool("DB_HTTPS") ?? false,
+      username: env.get("DB_USERNAME") ?? "matt",
+      password: env.get("DB_PASSWORD") ?? "123456"
+    )
+
+    print( "db connectionProperties \(dbName) \(connectionProperties.host) \(connectionProperties.port) \(connectionProperties.description)")
+
+    //connectionProperties = ConnectionProperties(host: host, port: port, secured: false)
     let client = CouchDBClient(connectionProperties: connectionProperties)
     database = client.database(databaseName)
   }
@@ -38,9 +51,21 @@ public class Datastore {
   private let databaseName:String
   private let connectionProperties:ConnectionProperties
 
-  init(host:String, port:Int16, dbName : String) {
+  init(dbName : String) {
+
+    let env = DotEnv()
+    connectionProperties = ConnectionProperties(
+      host: env.get("DB_HOST") ?? "localhost",
+      port: Int16(env.getAsInt("DB_PORT") ?? 5984),
+      secured: env.getAsBool("DB_HTTPS") ?? false,
+      username: env.get("DB_USERNAME") ?? "matt",
+      password: env.get("DB_PASSWORD") ?? "123456"
+    )
+
+    print( "db connectionProperties \(dbName) \(connectionProperties.host) \(connectionProperties.port) \(connectionProperties.description)")
+
     self.databaseName = dbName
-    connectionProperties = ConnectionProperties(host: "localhost", port: 5984, secured: false)
+    //connectionProperties = ConnectionProperties(host: "localhost", port: 5984, secured: false)
     let client = CouchDBClient(connectionProperties: connectionProperties)
     database = client.database(databaseName)
   }

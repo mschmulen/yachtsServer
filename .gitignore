@@ -8,4 +8,4 @@
 ## docker
 .idea/
 *.iml
-env
+.env

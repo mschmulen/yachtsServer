@@ -36,60 +36,31 @@ if [ -z $username ]; then
   echo "seed_couchdb.sh --username=<username> --password=<password> [--url=<url>]"
   echo "    default for --url is '$url'"
 #  exit
+	username=matt
+	password=123456
 fi
 
-if [ -z $username ]; then
-	
-	# #no username and password was provided
-	
-	# yachts
-	# delete and create database to ensure it's empty
-	curl -X DELETE $url/$database_yachts
-	curl -X PUT $url/$database_yachts
-	# Upload design document
-	curl -X PUT "$url/$database_yachts/_design/main_design" \
-	    -d @$current_dir/main_design.json
-	# Create data
-	curl -H "Content-Type: application/json" -d @$current_dir/yachts.json \
-	    -X POST $url/$database_yachts/_bulk_docs
-	
-	# users
-	# delete and create database to ensure it's empty
-	curl -X DELETE $url/$database_users
-	curl -X PUT $url/$database_users
-	# Upload design document
-	curl -X PUT "$url/$database_users/_design/main_design" \
-	    -d @$current_dir/main_design.json
-	# Create data
-	curl -H "Content-Type: application/json" -d @$current_dir/users.json \
-	    -X POST $url/$database_users/_bulk_docs
-	
-else	
-	
-	# yachts
-	# delete and create database to ensure it's empty
-	curl -X DELETE $url/$database_yachts -u $username:$password
-	curl -X PUT $url/$database_yachts -u $username:$password
-	# Upload design document
-	curl -X PUT "$url/$database_yachts/_design/main_design" -u $username:$password \
-	    -d @$current_dir/main_design.json
-	# Create data
-	curl -H "Content-Type: application/json" -d @$current_dir/yachts.json \
-	    -X POST $url/$database_yachts/_bulk_docs -u $username:$password
-	
-	# users	
-	# delete and create database to ensure it's empty
-	curl -X DELETE $url/$database_users -u $username:$password
-	curl -X PUT $url/$database_users -u $username:$password 
-	# Upload design document
-	curl -X PUT "$url/$database_users/_design/main_design" -u $username:$password \
-	    -d @$current_dir/main_design.json 
-	# Create data
-	curl -H "Content-Type: application/json" -d @$current_dir/users.json \
-	    -X POST $url/$database_users/_bulk_docs -u $username:$password
+# yachts
+# delete and create database to ensure it's empty
+curl -X DELETE $url/$database_yachts -u $username:$password
+curl -X PUT $url/$database_yachts -u $username:$password
+# Upload design document
+curl -X PUT "$url/$database_yachts/_design/main_design" -u $username:$password \
+    -d @$current_dir/main_design.json
+# Create data
+curl -H "Content-Type: application/json" -d @$current_dir/yachts.json \
+    -X POST $url/$database_yachts/_bulk_docs -u $username:$password
 
-
-fi
+# users	
+# delete and create database to ensure it's empty
+curl -X DELETE $url/$database_users -u $username:$password
+curl -X PUT $url/$database_users -u $username:$password 
+# Upload design document
+curl -X PUT "$url/$database_users/_design/main_design" -u $username:$password \
+    -d @$current_dir/main_design.json 
+# Create data
+curl -H "Content-Type: application/json" -d @$current_dir/users.json \
+    -X POST $url/$database_users/_bulk_docs -u $username:$password
 
 echo
 echo "Finished populating couchdb database '$database' on '$url'"
