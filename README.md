@@ -7,7 +7,7 @@ Open source [Swift](https://swift.org/) support makes it possible for developers
 
 JavaScript and Java Android developers have some great examples on taking advantage of this.  Javascript developers taking advantage of [nodejs](https://nodejs.org/) on the server and javascript on the web client such as how [airbnb leverages Isomorphic JavaScript](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) are good examples of how Swift iOS developers might leverage Swift on the server to improve their application delivery.
 
-This is an exploration of how to leverage common Isomorphic code in a native swift iOS app and on the server using [Swift Package Manager (SPM)](https://swift.org/package-manager/), [http://www.kitura.io/](http://www.kitura.io/) web server framework and XCode for the mobile iOS client.
+This is an exploration of how to leverage common Isomorphic code in a native swift iOS app and on the server using [Swift Package Manager (SPM)](https://swift.org/package-manager/), [kitura](http://www.kitura.io/) web server framework and XCode for the mobile iOS client.
 
 - Swift Server [https://github.com/mschmulen/yachtsServer](https://github.com/mschmulen/yachtsServer)
 - iOS App [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
