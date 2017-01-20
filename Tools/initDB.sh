@@ -3,6 +3,12 @@
 COUCH="localhost:5984"
 JSON="Content-Type:application/json"
 
+# curl -X PUT localhost:5984/architects
+# curl -X DELETE localhost:5984/architects
+# curl -X GET localhost:5984/architects
+# curl -X PUT localhost:5984/architects
+# curl -X GET localhost:5984/architects
+
 # Create the store
 
 curl -X PUT $COUCH/yachts

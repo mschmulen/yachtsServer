@@ -62,4 +62,3 @@ public class Datastore {
     database = client.database(databaseName)
   }
 }
-

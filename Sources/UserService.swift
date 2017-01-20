@@ -9,6 +9,8 @@ import yachtsShare
 
 class UserService {
 
+  private typealias Model = User
+
   var dataStore: (()-> Datastore)?
   
   func getAll(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
@@ -33,16 +35,20 @@ class UserService {
           dictionary["email"] = doc["doc"]["email"].stringValue
           dictionary["avatarURL"] = doc["doc"]["avatarURL"].stringValue
 
-          let m = User.deserialize(dictionary: dictionary)
+//          let m = User.deserialize(dictionary: dictionary)
+          let anyDictionary = dictionary as Any
+          let m = Model(object: anyDictionary)
+
           models.append(m)
         }
 
-        var modelsDictionary = [[String: Any]]()
+        var outDictionary = [[String: Any]]()
         for model in models {
-          modelsDictionary.append(model.serialize())
+          //modelsDictionary.append(model.serialize())
+          outDictionary.append(model.dictionaryRepresentation())
         }
 
-        let result: [String: Any] = ["result": status, "data": modelsDictionary]
+        let result: [String: Any] = ["result": status, "data": outDictionary]
         let json = JSON(result)
         response.status(.OK).send(json: json)
       }
@@ -74,9 +80,13 @@ class UserService {
         dictionary["name"] = doc["name"].stringValue
         dictionary["email"] = doc["email"].stringValue
 
-        let model = User.deserialize(dictionary: dictionary)
+        //let model = User.deserialize(dictionary: dictionary)
+        let anyDictionary = dictionary as Any
+        let model = Model(object: anyDictionary)
 
-        let result: [String: Any] = ["result": status, "data": model.serialize() as [String:Any] ]
+        //let result: [String: Any] = ["result": status, "data": model.serialize() as [String:Any] ]
+        let result: [String: Any] = ["result": status, "data": model.dictionaryRepresentation() as [String:Any] ]
+
         let json = JSON(result)
         response.status(.OK).send(json: json)
       }

@@ -136,6 +136,13 @@ Couch DB Docker file reference [https://github.com/apache/couchdb-docker/blob/ma
 
 Code Sharing between server and client:
 
+How to Implement Node + React Isomorphic JavaScript & Why it Matters , StrongLoop :
+[https://strongloop.com/strongblog/node-js-react-isomorphic-javascript-why-it-matters/](https://strongloop.com/strongblog/node-js-react-isomorphic-javascript-why-it-matters/)
+
+Isomorphic JavaScript: The Future of Web Apps , airbnb : [http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/)
+
+[https://blog.algolia.com/modern-javascript-libraries-the-isomorphic-way/](https://blog.algolia.com/modern-javascript-libraries-the-isomorphic-way/)
+
 Share POJO Entity Data Classes between Android and Spring projects [http://stackoverflow.com/questions/31566303/share-pojo-entity-data-classes-between-android-and-spring-projects](http://stackoverflow.com/questions/31566303/share-pojo-entity-data-classes-between-android-and-spring-projects)
 
 
@@ -153,6 +160,9 @@ Scheme generator in scala [https://github.com/VoxSupplyChain/json-schema-codegen
 Data Modeling Framework for JSON [https://github.com/jsonmodel/jsonmodel](https://github.com/jsonmodel/jsonmodel)
 
 
+Embedded web server for iOS UI testing [https://envoy.engineering/embedded-web-server-for-ios-ui-testing-8ff3cef513df#.srl7p1x5p](https://envoy.engineering/embedded-web-server-for-ios-ui-testing-8ff3cef513df#.srl7p1x5p)
+
+
 Scheme management:
 
 Swagger integrations [http://swagger.io/open-source-integrations/](http://swagger.io/open-source-integrations/)
@@ -168,6 +178,23 @@ api blueprint [https://apiblueprint.org/tools.html](https://apiblueprint.org/too
 ####TODO 
 
 - push to Docker Hub repo so it can be run via docker-compose reference
+
+####SwiftyJSONAccelerator
+
+Install
+
+1. `git clone https://github.com/insanoid/SwiftyJSONAccelerator.git && cd SwiftyJSONAccelerator`
+1. `make install`
+1. `cd ..`
+1. `rm -rf SwiftyJSONAccelerator`
+
+Run using `.config.json`
+
+1. generate: `swiftyjsonaccelerator generate -p Definitions`
+1. from the Definitions folder `cd ~/yachtsServer/Definitions`
+1. generate: `swiftyjsonaccelerator generate`
+
+note inject `import SwiftyJSON` into Model objects
 
 ---
 

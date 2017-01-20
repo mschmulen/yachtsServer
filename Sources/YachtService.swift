@@ -8,15 +8,18 @@ import CouchDB
 import yachtsShare
 
 // yacht model extension
-extension Yacht {
-  func serialize() -> JSON {
-    let model:[String: Any] = serialize()
-    let json = JSON(model)
-    return json
-  }
-}
+//extension Yacht {
+//  func serialize() -> JSON {
+//    let model:[String: Any] = serialize()
+//    let json = JSON(model)
+//    return json
+//  }
+//}
 
 public class YachtService {
+
+  private typealias Model = Yacht
+//  private typealias Model = ModelYacht
 
   var dataStore: (()-> Datastore)?
 
@@ -39,7 +42,7 @@ public class YachtService {
         //      Log.info("offset: \(offset)")
 
         let status = ["status": "ok"]
-        var models = [Yacht]()
+        var models = [Model]()
 
         for doc in docs["rows"].arrayValue {
           var dictionary = [String: Any]()
@@ -50,16 +53,19 @@ public class YachtService {
           dictionary["likes"] = doc["doc"]["like"].intValue
           dictionary["imageURL"] = doc["doc"]["imageURL"].stringValue
 
-          let m = Yacht.deserialize(dictionary: dictionary)
+//          let m = Model.deserialize(dictionary: dictionary)
+          let anyDictionary = dictionary as Any
+          let m = Model(object: anyDictionary)
           models.append(m)
         }
 
-        var modelsDictionary = [[String: Any]]()
+        var outDictionary = [[String: Any]]()
         for model in models {
-          modelsDictionary.append(model.serialize())
+//          outDictionary.append(model.serialize())
+          outDictionary.append(model.dictionaryRepresentation())
         }
 
-        let result: [String: Any] = ["result": status, "data": modelsDictionary]
+        let result: [String: Any] = ["result": status, "data": outDictionary]
         let json = JSON(result)
         response.status(.OK).send(json: json)
       }
@@ -94,9 +100,12 @@ public class YachtService {
         dictionary["likes"] = doc["like"].intValue
         dictionary["imageURL"] = doc["imageURL"].stringValue
 
-        let model = Yacht.deserialize(dictionary: dictionary)
+        //let model = Yacht.deserialize(dictionary: dictionary)
+        let anyDictionary = dictionary as Any
+        let model = Model(object: anyDictionary)
 
-        let result: [String: Any] = ["result": status, "data": model.serialize() as [String:Any] ]
+        //let result: [String: Any] = ["result": status, "data": model.serialize() as [String:Any] ]
+        let result: [String: Any] = ["result": status, "data": model.dictionaryRepresentation() as [String:Any] ]
         let json = JSON(result)
         response.status(.OK).send(json: json)
       }

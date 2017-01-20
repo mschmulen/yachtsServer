@@ -7,7 +7,8 @@ current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
  
 # Parse input parameters
 database_yachts=yachts
-database_users=users
+
+
 
 url=http://localhost:5984
 
@@ -42,27 +43,29 @@ fi
 
 # yachts
 # delete and create database to ensure it's empty
-curl -X DELETE $url/$database_yachts -u $username:$password
-curl -X PUT $url/$database_yachts -u $username:$password
-# Upload design document
-curl -X PUT "$url/$database_yachts/_design/main_design" -u $username:$password \
-    -d @$current_dir/main_design.json
-# Create data
-curl -H "Content-Type: application/json" -d @$current_dir/yachts.json \
-    -X POST $url/$database_yachts/_bulk_docs -u $username:$password
+# curl -X DELETE $url/$database_yachts -u $username:$password
+# curl -X PUT $url/$database_yachts -u $username:$password
+# # Upload design document
+# curl -X PUT "$url/$database_yachts/_design/main_design" -u $username:$password \
+#     -d @$current_dir/main_design.json
+# # Create data
+# curl -H "Content-Type: application/json" -d @$current_dir/yachts.json \
+#     -X POST $url/$database_yachts/_bulk_docs -u $username:$password
+#
+# # users
+database_users=users
+# # delete and create database to ensure it's empty
+# curl -X DELETE $url/$database_users -u $username:$password
+# curl -X PUT $url/$database_users -u $username:$password
+# # Upload design document
+# curl -X PUT "$url/$database_users/_design/main_design" -u $username:$password \
+#     -d @$current_dir/main_design.json
+# # Create data
+# curl -H "Content-Type: application/json" -d @$current_dir/users.json \
+#     -X POST $url/$database_users/_bulk_docs -u $username:$password
 
-# users	
-# delete and create database to ensure it's empty
-curl -X DELETE $url/$database_users -u $username:$password
-curl -X PUT $url/$database_users -u $username:$password 
-# Upload design document
-curl -X PUT "$url/$database_users/_design/main_design" -u $username:$password \
-    -d @$current_dir/main_design.json 
-# Create data
-curl -H "Content-Type: application/json" -d @$current_dir/users.json \
-    -X POST $url/$database_users/_bulk_docs -u $username:$password
-
-# architects	
+# architects
+database_architects=architects
 # delete and create database to ensure it's empty
 curl -X DELETE $url/$database_architects -u $username:$password
 curl -X PUT $url/$database_architects -u $username:$password 
