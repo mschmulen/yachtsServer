@@ -64,9 +64,21 @@ Follow the instructions on the Companion iOS App [https://github.com/mschmulen/y
 
 --- 
 
+##Misc Docker commands
+
+- show images: `docker images`
+- show images: `docker ps -a`
+- run with interactive and privlileged: `docker run --privileged -i -t --name yachts-swift-server mschmulen/swift-server:latest /bin/bash`
+- start a docker image: `docker start yachts-swift-server`
+- attach to a running image: `docker attach yachts-swift-server`
+- Clean up dangling images `docker rmi $(docker images -f "dangling=true" -q)`
+- One liner to stop all of Docker containers: `docker stop $(docker ps -a -q)`
+
+--- 
+
 ##Deploying to a provider WIP 
 
-####DigitalOcean:
+####DigitalOcean (usering docker-machine) :
 
 Prerequisites: 
 
@@ -83,35 +95,27 @@ Getting up and running:
 
 Docker machine common commands:
 
-- get the ip address: `docker-machine ip yachtsServer`
-- inspect: `docker-machine inspect yachtsServer`
-- show docker machines: `docker-machine ls`
-- connect to the docker machine: `docker-machine ssh yachtsServer`
-- stop: `docker-machine stop yachtsServer`
-- remove: `docker-machine rm yachtServer`
+- Get the ip address: `docker-machine ip yachtsServer`
+- Inspect: `docker-machine inspect yachtsServer`
+- Show docker machines: `docker-machine ls`
+- Connect to the docker machine: `docker-machine ssh yachtsServer`
+- Stop: `docker-machine stop yachtsServer`
+- Remove: `docker-machine rm yachtServer`
 
-####Deploying via bluemix:
+####Deploying via ibm bluemix:
 
-1. bluemix login
+**note bluemix does not have a freemium offer and you will be charged mercilessly per minute**
+
+1. create an account at [ibm bluemix](https://www.ibm.com/cloud-computing/bluemix/swift)
+1. cf login -a api.ng.bluemix.net
 1. cf push "yachts"
 
 delete your app with : `cf delete "yachts"`
 
-##Misc Docker commands
-
-- show images `docker images`
-- show images `docker ps -a`
-- docker run --privileged -i -t --name yachts-swift-server mschmulen/swift-server:latest /bin/bash
-- docker start yachts-swift-server
-- docker attach yachts-swift-server
-- clean up dangling images `docker rmi $(docker images -f "dangling=true" -q)`
-- One liner to stop all of Docker containers: `docker stop $(docker ps -a -q)`
 
 ###Misc References
 
-[https://github.com/swiftdocker/docker-swift](https://github.com/swiftdocker/docker-swift)
-
-IBM Swift docker examples [https://github.com/IBM-MIL/Samples](https://github.com/IBM-MIL/Samples)
+An Ubuntu 16.04 Docker image for Swift [https://github.com/swiftdocker/docker-swift](https://github.com/swiftdocker/docker-swift).  Run with `docker run --privileged -i -t --name swiftfun swiftdocker/swift:latest /bin/bash`
 
 Digital ocean Docker
 [https://docs.docker.com/machine/examples/ocean/](https://docs.docker.com/machine/examples/ocean/)
@@ -119,16 +123,13 @@ Digital ocean Docker
 Digital Ocean Server Side Swift
 [https://medium.com/@LarsJK/easy-server-side-swift-with-docker-4c297feeeeb5#.1g5i8ilmq](https://medium.com/@LarsJK/easy-server-side-swift-with-docker-4c297feeeeb5#.1g5i8ilmq) and corresponding github repo [https://github.com/serversideswift/swift-docker/blob/master/Dockerfile](https://github.com/serversideswift/swift-docker/blob/master/Dockerfile)
 
+IBM Swift docker examples [https://github.com/IBM-MIL/Samples](https://github.com/IBM-MIL/Samples)
+
+Docker hub: twostraws Swift Server [https://hub.docker.com/r/twostraws/server-side-swift/](https://hub.docker.com/r/twostraws/server-side-swift/) docker file reference 
+
+IBM Simple swift docker configuration [https://developer.ibm.com/swift/2015/12/15/running-swift-within-docker/](https://developer.ibm.com/swift/2015/12/15/running-swift-within-docker/) 
 
 Couch DB Docker file reference [https://github.com/apache/couchdb-docker/blob/master/2.0-dev-docs/Dockerfile](https://github.com/apache/couchdb-docker/blob/master/2.0-dev-docs/Dockerfile)
-
-
-Docker Hub Swift Server [https://hub.docker.com/r/twostraws/server-side-swift/](https://hub.docker.com/r/twostraws/server-side-swift/) docker file reference 
-
-https://hub.docker.com/r/rocker/drd/~/dockerfile/
-
-Simple swift docker configuration [https://developer.ibm.com/swift/2015/12/15/running-swift-within-docker/](https://developer.ibm.com/swift/2015/12/15/running-swift-within-docker/) 
-
 
 --- 
 
@@ -137,11 +138,6 @@ Simple swift docker configuration [https://developer.ibm.com/swift/2015/12/15/ru
 ####TODO 
 
 - push to Docker Hub repo so it can be run via docker-compose reference
-
---- 
-
-docker run --privileged -i -t --name swiftfun swiftdocker/swift:latest /bin/bash
-
 
 ---
 
