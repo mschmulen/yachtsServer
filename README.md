@@ -15,7 +15,7 @@ Use the [Building and running with Docker](#building-and-running-with-docker) to
 - iOS App [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
 - Common shared Swift package for isomorphic models [https://github.com/mschmulen/yachtsShare](https://github.com/mschmulen/yachtsShare)
 
-##Building and running with Docker
+##Building and running with docker compose
 
 ###Prerequisites
 
@@ -115,6 +115,8 @@ delete your app with : `cf delete "yachts"`
 
 ###Misc References
 
+Docker and Provider references:
+
 An Ubuntu 16.04 Docker image for Swift [https://github.com/swiftdocker/docker-swift](https://github.com/swiftdocker/docker-swift).  Run with `docker run --privileged -i -t --name swiftfun swiftdocker/swift:latest /bin/bash`
 
 Digital ocean Docker
@@ -131,6 +133,34 @@ IBM Simple swift docker configuration [https://developer.ibm.com/swift/2015/12/1
 
 Couch DB Docker file reference [https://github.com/apache/couchdb-docker/blob/master/2.0-dev-docs/Dockerfile](https://github.com/apache/couchdb-docker/blob/master/2.0-dev-docs/Dockerfile)
 
+
+Code Sharing between server and client:
+
+Share POJO Entity Data Classes between Android and Spring projects [http://stackoverflow.com/questions/31566303/share-pojo-entity-data-classes-between-android-and-spring-projects](http://stackoverflow.com/questions/31566303/share-pojo-entity-data-classes-between-android-and-spring-projects)
+
+
+Swift:
+
+OSX app and CLI to generate Swift 3 code for models from JSON. [https://github.com/insanoid/SwiftyJSONAccelerator](https://github.com/insanoid/SwiftyJSONAccelerator)
+
+
+An implementation (validator) of JSON Schema in Swift [https://github.com/kylef/JSONSchema.swift](https://github.com/kylef/JSONSchema.swift)
+
+Scheme generator in ruby [https://github.com/maxlinc/json-schema-generator](https://github.com/maxlinc/json-schema-generator)
+
+Scheme generator in scala [https://github.com/VoxSupplyChain/json-schema-codegen](https://github.com/VoxSupplyChain/json-schema-codegen)
+
+Data Modeling Framework for JSON [https://github.com/jsonmodel/jsonmodel](https://github.com/jsonmodel/jsonmodel)
+
+
+Scheme management:
+
+Swagger integrations [http://swagger.io/open-source-integrations/](http://swagger.io/open-source-integrations/)
+
+Swagger swift gen [https://github.com/yonaskolb/SwagGen](https://github.com/yonaskolb/SwagGen)
+
+api blueprint [https://apiblueprint.org/tools.html](https://apiblueprint.org/tools.html)
+
 --- 
 
 ###Misc Notes (the Attic)
@@ -143,13 +173,10 @@ Couch DB Docker file reference [https://github.com/apache/couchdb-docker/blob/ma
 
 
 ####run the docker hub twostraws/server-side-swift image
-```
-mkdir docker-server
-cd docker-server
-docker run -itv $(pwd):/swiftServer --name swiftServer -w /swiftServer -p 8089:8089 -p 8090:8090 -p 5984:5984 twostraws/server-side-swift /bin/bash
-```
 
-run via twostraws image `docker run -itv $(pwd):/swiftServer --name swiftServer -w /swiftServer -p 8089:8089 -p 8090:8090 -p 5984:5984 twostraws/server-side-swift /bin/bash`
+1. `mkdir docker-server`
+1. `cd docker-server`
+1. `docker run -itv $(pwd):/swiftServer --name swiftServer -w /swiftServer -p 8089:8089 -p 8090:8090 -p 5984:5984 twostraws/server-side-swift /bin/bash`
 
 #### run the docker container locally
 
