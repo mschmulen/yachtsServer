@@ -35,9 +35,9 @@ Use the [Building and running with Docker](#building-and-running-with-docker) to
 ###Prerequisites
 
 - Verify version 3.0.2 with `swift -v` or follow the getting started at [https://swift.org/getting-started/](https://swift.org/getting-started/)
-- XCode
+- Xcode
 
-###Building and running the server with XCode or local SPM ( Swift Package Manager)
+###Building and running the server with Xcode or local SPM ( Swift Package Manager)
 
 Building and running with command line SPM (Swift Package Manager)
 
@@ -47,11 +47,11 @@ Building and running with command line SPM (Swift Package Manager)
 1. Seed the couchDB datastore `Tools/seed_couchdb.sh --username=matt --password=123456` (verify your local credentials)
 1. Run the server with `.build/debug/yachtsServer`
 
-Building and running with XCode 
+Building and running with Xcode 
 
 1. Clone the repo `git clone git@github.com:mschmulen/yachtsServer && cd yachtsServer`
-1. Generating the xcode project `swift package generate-xcodeproj`
-1. Open in xCode `open yachtsServer.xcodeproj`
+1. Generating the Xcode project `swift package generate-xcodeproj`
+1. Open in Xcode `open yachtsServer.xcodeproj`
 1. Insure the [couchdb](http://couchdb.apache.org/) data store is running local or via a local docker host
 1. Seed the couchDB datastore `Tools/seed_couchdb.sh --username=matt --password=123456` (verify your local credentials)
 1. Make sure and select the cmd line target then build and run with  `⌘ + r`
@@ -60,7 +60,7 @@ Verify the server is running [ttp://localhost:8090](ttp://localhost:8090) and [h
 
 ##Run the companion iOS app
 
-Follow the instructions on the Companion Swift Server [https://github.com/mschmulen/yachtsServer](https://github.com/mschmulen/yachtsServer)
+Follow the instructions on the Companion iOS App [https://github.com/mschmulen/yachtsApp](https://github.com/mschmulen/yachtsApp)
 
 --- 
 
