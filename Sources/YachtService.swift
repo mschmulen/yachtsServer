@@ -23,10 +23,17 @@ public class YachtService {
 
   var dataStore: (()-> Datastore)?
 
+  // MAS NOTE: why was next allowed as non marked @escaping ... apply the next inside the datastore retrieve closure
   //Find all instances matched by filter from the datastore
   public func getAll(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
-    defer { next() }
-    
+    defer {
+      Log.info("defer next")
+      next()
+    }
+
+    Log.info("start func")
+
+
     SingletonDatastore.sharedInstance.database.retrieveAll(includeDocuments: true) { docs, error in
       if let error = error {
         let errorMessage = error.localizedDescription
@@ -34,6 +41,7 @@ public class YachtService {
         let	result = ["result": status]
         let json = JSON(result)
         response.status(.notFound).send(json: json)
+        //next()
       } else if let docs = docs {
 
         //      let total_rows = docs["total_rows"].stringValue
@@ -65,11 +73,17 @@ public class YachtService {
           outDictionary.append(model.dictionaryRepresentation())
         }
 
+        Log.info("pre result response")
+
         let result: [String: Any] = ["result": status, "data": outDictionary]
         let json = JSON(result)
         response.status(.OK).send(json: json)
+        //next()
+
       }
     }
+    Log.info("end of func")
+
   }
 
   // find a model instance by id from the datastore
@@ -110,6 +124,7 @@ public class YachtService {
         response.status(.OK).send(json: json)
       }
     }
+    //next()
   }
 
   // delete a model instance by id from the datastore

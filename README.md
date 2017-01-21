@@ -1,5 +1,5 @@
 
-Evaluation demo for sharing swift server side code modules with native iOS clients.
+Evaluation demo and prototype for sharing swift server side code modules with native iOS clients.
 
 ##Abstract
 
@@ -74,7 +74,18 @@ Follow the instructions on the Companion iOS App [https://github.com/mschmulen/y
 - Clean up dangling images `docker rmi $(docker images -f "dangling=true" -q)`
 - One liner to stop all of Docker containers: `docker stop $(docker ps -a -q)`
 
+
+##Special Thanks !
+
+Special thanks too [erutherford](https://github.com/erutherford), [jessecravens](https://github.com/jessecravens), [thedodd](https://github.com/thedodd), [sharplet](https://github.com/sharplet), [kristenfelch](https://github.com/kristenfelch), and especially  [rlwimi](https://github.com/rlwimi) for taking the time to review, provide thier expert advice on the development and goals this prototype project.
+
+
+Thanks to [insanoid](https://github.com/insanoid) for his work on [SwiftyJSONAccelerator](https://github.com/insanoid/SwiftyJSONAccelerator), its a great tool for creating Swift model structs from JSON stubs.
+
+The Kitura Swift web and HTTP server framework [https://github.com/IBM-Swift/Kitura](https://github.com/IBM-Swift/Kitura) project.
+
 --- 
+
 
 ##Deploying to a provider WIP 
 
