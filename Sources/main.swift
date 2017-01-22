@@ -6,7 +6,7 @@ import HeliumLogger
 import SwiftyJSON
 import CouchDB
 import DotEnv
-import yachtsShare
+//import yachtsShare
 
 HeliumLogger.use()
 HeliumLogger.use(.info)

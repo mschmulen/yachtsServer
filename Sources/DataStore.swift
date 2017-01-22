@@ -6,7 +6,7 @@ import HeliumLogger
 import SwiftyJSON
 import CouchDB
 import DotEnv
-import yachtsShare
+//import yachtsShare
 
 //Singleton version of the datastore
 public class SingletonDatastore {
