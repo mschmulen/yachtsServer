@@ -20,10 +20,23 @@ class API {
 
     let router = Router()
     router.post("/", middleware: BodyParser())
-    
+
+    // Add generic CRUD service endpoints
     API.addService(model:ModelYacht.self, router: router, serviceRoot:"/yachts", dbName: "yachts")
     API.addService(model:ModelArchitect.self, router: router, serviceRoot:"/architects", dbName: "architects")
     API.addService(model:ModelUser.self, router: router, serviceRoot:"/users", dbName: "users")
+    
+    // Add some custom service endpoints
+
+    router.get("/version", handler: { (request, response, next: @escaping () -> Void) in
+      defer { next() }
+      let status = ["status": "ok"]
+      let result: [String: Any] = ["result": status, "app":"yachtsServer", "version": "1.1.0"]
+      let json = JSON(result)
+      response.status(.OK).send(json: json)
+    })
+
+    API.addCustomRegisterService(router: router)
 
     return router
 
@@ -74,12 +87,67 @@ class API {
     router.get("\(serviceRoot)/:id", handler: service.incrimentLike)
   }
 
+  static func addCustomRegisterService(router:Router) {
+
+    router.post("/register", handler: { (request, response, next: @escaping () -> Void) in
+      defer { next() }
+
+      guard let values = request.body else {
+        try response.status(.badRequest).end()
+        return
+      }
+
+      let requiredPostfields = ["name", "email", "password"]
+      var postData = [String: Any]()
+
+      var email:String? = ""
+      switch ( values ) {
+      case .json(let body) :
+        for field in requiredPostfields {
+          if let value = body[field].string {
+            postData[field] = value
+            continue
+          }
+          try response.status(.badRequest).end()
+          return
+        }
+
+        email = body["email"].string
+
+      case .urlEncoded(let body) :
+        for field in requiredPostfields {
+          if let value = body[field]?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            if value.characters.count > 0 {
+              postData[field] = value.removingHTMLEncoding()
+              continue
+            }
+          }
+
+          try response.status(.badRequest).end()
+          return
+        }
+      case .multipart(let body) :
+        print( " this is a multipart post and is not supported \(body)")
+        try response.status(.badRequest).end()
+      default:
+        try response.status(.badRequest).end()
+      }//end switch
+
+      let status = ["status": "ok", "email": email]
+      let	result = ["result": status]
+      response.status(.OK).send(json: JSON(result))
+    })
+  }
+
+
+
+
 
 }
 
 
 //    // ---------------------------
-//    // Yachts Route
+//    // Legacy Yachts Route
 //    // ---------------------------
 //    let yachtDataStore = Datastore(dbName: "yachts")
 //    let yachtService = YachtService()
