@@ -15,6 +15,8 @@ public class ServiceGenericModelCRUD<Model:CRUDModel> {
 
   // MAS NOTE: why was next allowed as non marked @escaping ... apply the next inside the datastore retrieve closure
   //Find all instances matched by filter from the datastore
+  
+  //router.get("/yachts", handler: service.getAll)
   public func getAll(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
@@ -33,31 +35,16 @@ public class ServiceGenericModelCRUD<Model:CRUDModel> {
         //      Log.info("total_rows: \(total_rows)")
         //      Log.info("offset: \(offset)")
 
-        let status = ["status": "ok"]
         var models = [Model]()
 
         for doc in docs["rows"].arrayValue {
 
           var dictionary = [String: Any]()
-
           for k in Model.keys {
             dictionary[k] = doc["doc"][k].rawValue
           }
-
-          //          dictionary["id"] = doc["id"].stringValue
-          //          dictionary["name"] = doc["doc"]["name"].stringValue
-          //          dictionary["url"] = doc["doc"]["url"].stringValue
-          //          dictionary["architect"] = doc["doc"]["architect"].stringValue
-          //          dictionary["likes"] = doc["doc"]["like"].intValue
-          //          dictionary["imageURL"] = doc["doc"]["imageURL"].stringValue
-          //           var m = Model.deserialize(dictionary: dictionary)
           let anyDictionary = dictionary as Any
           var m = Model(object: anyDictionary)
-
-          //          let jsonData = doc["doc"]
-          //          //strait to object via json
-          //          let datum = doc["doc"]["name"]
-          //          var m = Model(object:jsonData)
           m.identifier = doc["id"].stringValue
           models.append(m)
         }
@@ -67,7 +54,7 @@ public class ServiceGenericModelCRUD<Model:CRUDModel> {
           outDictionary.append(model.dictionaryRepresentation())
         }
 
-        let result: [String: Any] = ["result": status, "data": outDictionary]
+        let result: [String: Any] = ["result": ["status": "ok"], "data": outDictionary]
         let json = JSON(result)
         response.status(.OK).send(json: json)
       }
@@ -75,6 +62,7 @@ public class ServiceGenericModelCRUD<Model:CRUDModel> {
   }
 
   // find a model instance by id from the datastore
+  //router.get("\(serviceRoot)/:id", handler:  service.getModel)
   public func getModel(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
     defer { next() }
 
@@ -92,20 +80,26 @@ public class ServiceGenericModelCRUD<Model:CRUDModel> {
 
         response.status(.notFound).send(json: json)
       } else if let doc = doc {
-        let status = ["status": "ok"]
 
         var dictionary = [String: Any]()
-        dictionary["id"] = doc["_id"].stringValue
-        dictionary["name"] = doc["name"].stringValue
-        dictionary["url"] = doc["url"].stringValue
-        dictionary["architect"] = doc["architect"].stringValue
-        dictionary["likes"] = doc["like"].intValue
-        dictionary["imageURL"] = doc["imageURL"].stringValue
-
+        for k in Model.keys {
+          dictionary[k] = doc["doc"][k].rawValue
+        }
         let anyDictionary = dictionary as Any
-        let model = Model(object: anyDictionary)
+        var model = Model(object: anyDictionary)
+        model.identifier = doc["id"].stringValue
 
-        let result: [String: Any] = ["result": status, "data": model.dictionaryRepresentation() as [String:Any] ]
+//        dictionary["id"] = doc["_id"].stringValue
+//        dictionary["name"] = doc["name"].stringValue
+//        dictionary["url"] = doc["url"].stringValue
+//        dictionary["architect"] = doc["architect"].stringValue
+//        dictionary["likes"] = doc["like"].intValue
+//        dictionary["imageURL"] = doc["imageURL"].stringValue
+//
+//        let anyDictionary = dictionary as Any
+//        let model = Model(object: anyDictionary)
+
+        let result: [String: Any] = ["result": ["status": "ok"], "data": model.dictionaryRepresentation() as [String:Any] ]
         let json = JSON(result)
         response.status(.OK).send(json: json)
       }
@@ -138,14 +132,12 @@ public class ServiceGenericModelCRUD<Model:CRUDModel> {
 
         self.dataStore?().database.delete(id, rev: rev) { error in
           if let error = error {
-            let errorMessage = error.localizedDescription
-            let status = ["status": "error", "message": errorMessage]
+            let status = ["status": "error", "message": error.localizedDescription]
             let	result = ["result": status]
             let json = JSON(result)
             response.status(.notFound).send(json: json)
           } else {
-            let status = ["status": "ok"]
-            let result: [String: Any] = ["result": status, "message": "instance \(id) deleted" ]
+            let result: [String: Any] = ["result": ["status": "ok"], "message": "instance \(id) deleted" ]
             let json = JSON(result)
             response.status(.OK).send(json: json)
           }
@@ -206,14 +198,12 @@ public class ServiceGenericModelCRUD<Model:CRUDModel> {
         let status = ["status": "ok", "id": id]
         let	result = ["result": status]
         let json = JSON(result)
-
         response.status(.OK).send(json: json)
       } else {
         let errorMessage = error?.localizedDescription ?? "Unknown error"
         let status = ["status": "error", "message": errorMessage]
         let	result = ["result": status]
         let json = JSON(result)
-
         response.status(.internalServerError).send(json: json)
       }
     }

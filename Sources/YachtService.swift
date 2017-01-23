@@ -353,45 +353,6 @@ import CouchDB
 //  }
 //  
 //  // custom method
-//  public func incrimentLike(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
-//    defer { next() }
-//
-//    guard let id = request.parameters["id"] else {
-//        try response.status(.badRequest).end()
-//        return
-//    }
-//    
-//    SingletonDatastore.sharedInstance.database.retrieve(id) { doc, error in
-//      if let error = error {
-//        let errorMessage = error.localizedDescription
-//        let status = ["status": "error", "message": errorMessage]
-//        let	result = ["result": status]
-//        let json = JSON(result)
-//
-//        response.status(.notFound).send(json: json)
-//      } else if let doc = doc {
-//        var newDocument = doc
-//        let id = doc["_id"].stringValue
-//        let rev = doc["_rev"].stringValue
-//
-//        newDocument["likes"].intValue = 3
-//        
-//        SingletonDatastore.sharedInstance.database.update(id, rev: rev, document: newDocument) { rev, doc, error in
-//          if let _ = error {
-//            let status = ["status": "error"]
-//            let	result = ["result": status]
-//            let json = JSON(result)
-//            response.status(.conflict).send(json: json)
-//          } else {
-//            let status = ["status": "ok"]
-//            let	result = ["result": status]
-//            let json = JSON(result)
-//            response.status(.OK).send(json: json)
-//          }
-//        }
-//      }
-//    }
-//  }
 //  
 //  public func getfunction(request: RouterRequest, response: RouterResponse, next: () -> Void) throws {
 //    defer { next() }
