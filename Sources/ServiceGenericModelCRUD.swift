@@ -71,6 +71,8 @@ public class ServiceGenericModelCRUD<Model:CRUDModel> {
       return
     }
 
+    Log.info("retrieve id :\(id)")
+
     dataStore?().database.retrieve(id) { doc, error in
       if let error = error {
         let errorMessage = error.localizedDescription
@@ -80,6 +82,10 @@ public class ServiceGenericModelCRUD<Model:CRUDModel> {
 
         response.status(.notFound).send(json: json)
       } else if let doc = doc {
+
+        Log.info("found id :\(doc["id"].stringValue)")
+
+        Log.info("doc[doc] :\(doc["doc"])")
 
         var dictionary = [String: Any]()
         for k in Model.keys {

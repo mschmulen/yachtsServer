@@ -16,9 +16,12 @@ extension ModelArchitect : CRUDModel { }
 
 class API {
 
+  let version = "v1"
+
   lazy var router: Router = {
 
     let router = Router()
+
     router.post("/", middleware: BodyParser())
 
     // Add generic CRUD service endpoints
